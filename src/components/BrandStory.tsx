@@ -1,0 +1,70 @@
+import React from "react";
+import Image from "next/image";
+import { MessageCircle, HeartHandshake } from "lucide-react";
+import { getGeneralWhatsAppUrl } from "@/lib/whatsapp";
+
+export default function BrandStory() {
+  return (
+    <section id="about" className="py-14 sm:py-20 bg-[#FAF7F2] border-b border-[#E8DEC8]">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-16 items-center">
+          {/* Brand Visual Collage */}
+          <div className="relative">
+            <div className="relative aspect-[4/3] rounded-2xl overflow-hidden shadow-lg border-2 border-[#E8DEC8]">
+              <Image
+                src="https://images.unsplash.com/photo-1610030469983-98e550d6193c?auto=format&fit=crop&w=1200&q=80"
+                alt="Silk Mode Fashion Artisan Heritage"
+                fill
+                className="object-cover"
+              />
+            </div>
+            {/* Floating Emblem */}
+            <div className="absolute -bottom-6 -right-4 sm:-bottom-8 sm:right-6 bg-[#58111A] text-[#FAF6F0] p-4 sm:p-5 rounded-2xl shadow-xl border border-[#D4AF37]/40 max-w-[200px] sm:max-w-[240px]">
+              <div className="flex items-center space-x-2 text-[#D4AF37] mb-1">
+                <HeartHandshake className="w-5 h-5" />
+                <span className="text-[11px] font-bold tracking-widest uppercase">Pure Handlooms</span>
+              </div>
+              <p className="text-xs text-[#E6DDD0] leading-snug">
+                Empowering generational Indian weavers since our inception.
+              </p>
+            </div>
+          </div>
+
+          {/* Story Text */}
+          <div className="lg:pl-4">
+            <span className="text-xs font-bold text-[#C5A059] uppercase tracking-widest">
+              The Silk Mode Legacy
+            </span>
+            <h2 className="mt-2 font-serif-luxury text-2xl sm:text-3xl md:text-4xl text-[#2B2927] leading-tight">
+              Honoring India&apos;s Richest Weaving Traditions
+            </h2>
+            <div className="mt-4 space-y-3 text-sm text-[#6E675F] leading-relaxed">
+              <p>
+                At <strong className="text-[#2B2927]">Silk Mode Fashion</strong>, sarees are more than six yards of fabric; they are living heirlooms woven with love, culture, and centuries of indigenous craftsmanship.
+              </p>
+              <p>
+                From royal Banarasi brocades and heavy Kanjivaram silks to breezy party wear satins and organza drapes, our collections celebrate the woman who cherishes her roots while embracing contemporary grace.
+              </p>
+              <p>
+                Every piece in our catalogue is thoughtfully curated for elegance, longevity, and pure drape comfort.
+              </p>
+            </div>
+
+            <div className="mt-8 flex items-center space-x-4">
+              <a
+                href={getGeneralWhatsAppUrl("Hello Silk Mode Fashion, I would love to know more about your brand and custom bridal services.")}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center space-x-2 px-6 py-3 rounded-full bg-[#58111A] hover:bg-[#460D1B] text-[#FAF6F0] text-xs font-semibold tracking-wider uppercase transition shadow"
+              >
+                <MessageCircle className="w-4 h-4 text-[#D4AF37]" />
+                <span>Chat with Founder</span>
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+}
+
