@@ -1,3 +1,9 @@
+export interface ProductColor {
+  name: string;
+  hex: string;
+  imageIndex: number;
+}
+
 export interface SareeProduct {
   id: string;
   slug: string;
@@ -13,6 +19,7 @@ export interface SareeProduct {
   sareeLength?: string;
   blouseDetails?: string;
   images: string[];
+  colors?: ProductColor[];
   trending: boolean;
   featured: boolean;
   inStock?: boolean;
@@ -36,6 +43,10 @@ export const PRODUCTS_DATA: SareeProduct[] = [
     images: [
       "https://images.unsplash.com/photo-1610030469983-98e550d6193c?auto=format&fit=crop&w=800&q=80",
       "https://images.unsplash.com/photo-1617627143750-d86bc21e42bb?auto=format&fit=crop&w=800&q=80",
+    ],
+    colors: [
+      { name: "Royal Crimson", hex: "#722F37", imageIndex: 0 },
+      { name: "Peacock Blue", hex: "#1D3557", imageIndex: 1 },
     ],
     trending: true,
     featured: true,

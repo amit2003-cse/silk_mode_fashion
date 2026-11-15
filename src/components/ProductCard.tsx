@@ -12,7 +12,10 @@ interface ProductCardProps {
 }
 
 export default function ProductCard({ product, onQuickView }: ProductCardProps) {
-  const [currentImageIdx] = useState(0);
+  const [currentImageIdx, setCurrentImageIdx] = useState(0);
+  const [selectedColor, setSelectedColor] = useState<string | undefined>(
+    product.colors?.[0]?.name
+  );
   const [imageError, setImageError] = useState(false);
 
   const formattedPrice = `Rs. ${product.price.toLocaleString("en-IN")}`;
@@ -77,7 +80,7 @@ export default function ProductCard({ product, onQuickView }: ProductCardProps) 
       {/* Card Info Section */}
       <div className="p-2 sm:p-3.5 flex-1 flex flex-col justify-between bg-white min-w-0">
         <div className="min-w-0">
-          {/* Category */}
+          {/* Category & SKU Code */}
           <div className="flex items-center justify-between text-[10px] sm:text-[11px] text-stone-500 mb-1 truncate">
             <span className="truncate">{product.category}</span>
             {product.code && (
@@ -107,6 +110,36 @@ export default function ProductCard({ product, onQuickView }: ProductCardProps) 
               {formattedPrice}
             </span>
           </div>
+
+          {/* Interactive Color Swatches (Method 1) */}
+          {product.colors && product.colors.length > 1 && (
+            <div className="flex items-center space-x-1.5 mt-2 pt-1 border-t border-stone-100">
+              {product.colors.map((c, idx) => (
+                <button
+                  key={idx}
+                  type="button"
+                  title={c.name}
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    setCurrentImageIdx(c.imageIndex);
+                    setSelectedColor(c.name);
+                  }}
+                  style={{ backgroundColor: c.hex }}
+                  className={`w-3.5 h-3.5 sm:w-4 sm:h-4 rounded-full border transition-transform ${
+                    currentImageIdx === c.imageIndex
+                      ? "ring-2 ring-offset-1 ring-[#58111A] scale-110"
+                      : "border-stone-300 opacity-80 hover:opacity-100"
+                  }`}
+                  aria-label={`Select ${c.name}`}
+                />
+              ))}
+              {selectedColor && (
+                <span className="text-[10px] text-stone-500 truncate ml-1 font-medium">
+                  {selectedColor}
+                </span>
+              )}
+            </div>
+          )}
         </div>
 
         {/* WhatsApp Direct Enquiry Action Button */}
@@ -117,6 +150,7 @@ export default function ProductCard({ product, onQuickView }: ProductCardProps) 
               price: product.price,
               category: product.category,
               code: product.code,
+              color: selectedColor,
             })}
             target="_blank"
             rel="noopener noreferrer"
