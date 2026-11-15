@@ -4,7 +4,7 @@ import React, { useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { MessageCircle, Eye } from "lucide-react";
+import { MessageCircle } from "lucide-react";
 import { SareeProduct } from "@/data/products";
 import { getProductWhatsAppUrl } from "@/lib/whatsapp";
 
@@ -70,22 +70,6 @@ export default function ProductCard({ product, onQuickView }: ProductCardProps) 
             </span>
           </div>
         )}
-
-        {/* Quick View Floating Icon on top-right */}
-        <div className="absolute top-2 right-2 z-10">
-          <button
-            type="button"
-            onClick={(e) => {
-              e.preventDefault();
-              e.stopPropagation();
-              onQuickView?.(product);
-            }}
-            aria-label="Quick View"
-            className="w-7 h-7 sm:w-8 sm:h-8 rounded-full bg-white/95 backdrop-blur-xs flex items-center justify-center text-stone-700 hover:bg-white hover:text-[#58111A] transition shadow-xs cursor-pointer"
-          >
-            <Eye className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
-          </button>
-        </div>
 
         {/* Desktop Quick "View Details" Overlay Button */}
         <div className="hidden sm:block absolute inset-x-3 bottom-3 opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-10 pointer-events-none">
