@@ -41,14 +41,13 @@ export default function Header({ onSelectProduct }: HeaderProps) {
     }
   }, [searchOpen]);
 
-  // Vastrang-inspired navigation links
+  // Navigation links
   const navLinks = [
-    { label: "Home", href: "#hero" },
-    { label: "Clearance Sale", href: "#trending" },
-    { label: "Saree", href: "#collections" },
-    { label: "Salwar Suit", href: "#collections" },
-    { label: "Blouse", href: "#collections" },
-    { label: "Lehenga Choli", href: "#bestsellers" },
+    { label: "Home", href: "/" },
+    { label: "All Sarees", href: "/collections" },
+    { label: "Clearance Sale", href: "/collections" },
+    { label: "Collections", href: "/collections" },
+    { label: "Best Sellers", href: "/#bestsellers" },
   ];
 
   return (
@@ -126,8 +125,9 @@ export default function Header({ onSelectProduct }: HeaderProps) {
                       Matching Products ({searchResults.length})
                     </div>
                     {searchResults.map((product) => (
-                      <div
+                      <Link
                         key={product.id}
+                        href={`/products/${product.slug}`}
                         onClick={() => {
                           onSelectProduct?.(product);
                           setSearchQuery("");
@@ -142,7 +142,7 @@ export default function Header({ onSelectProduct }: HeaderProps) {
                           <p className="text-xs text-stone-500">{product.category}</p>
                           <p className="text-xs font-bold text-[#58111A] mt-0.5">₹{product.price.toLocaleString("en-IN")}</p>
                         </div>
-                      </div>
+                      </Link>
                     ))}
                   </div>
                 )}
@@ -200,8 +200,9 @@ export default function Header({ onSelectProduct }: HeaderProps) {
               {searchResults.length > 0 && (
                 <div className="mt-2 bg-white border border-stone-200 rounded-xl shadow-lg max-h-72 overflow-y-auto">
                   {searchResults.map((product) => (
-                    <div
+                    <Link
                       key={product.id}
+                      href={`/products/${product.slug}`}
                       onClick={() => {
                         onSelectProduct?.(product);
                         setSearchOpen(false);
@@ -217,7 +218,7 @@ export default function Header({ onSelectProduct }: HeaderProps) {
                         <p className="text-xs text-stone-500">{product.category}</p>
                         <p className="text-xs font-bold text-[#58111A] mt-0.5">₹{product.price.toLocaleString("en-IN")}</p>
                       </div>
-                    </div>
+                    </Link>
                   ))}
                 </div>
               )}

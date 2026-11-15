@@ -2,6 +2,8 @@
 
 import React, { useState } from "react";
 import Image from "next/image";
+import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { MessageCircle, Eye } from "lucide-react";
 import { SareeProduct } from "@/data/products";
 import { getProductWhatsAppUrl } from "@/lib/whatsapp";
@@ -12,6 +14,7 @@ interface ProductCardProps {
 }
 
 export default function ProductCard({ product, onQuickView }: ProductCardProps) {
+  const router = useRouter();
   const [currentImageIdx, setCurrentImageIdx] = useState(0);
   const [selectedColor, setSelectedColor] = useState<string | undefined>(
     product.colors?.[0]?.name
@@ -28,10 +31,28 @@ export default function ProductCard({ product, onQuickView }: ProductCardProps) 
     ? "/images/hero-banner-2.jpg"
     : product.images[currentImageIdx] || product.images[0] || "/images/hero-banner-2.jpg";
 
+  const productUrl = `/products/${product.slug}`;
+
+  // Card click navigates to dedicated Product Detail Page
+  const handleCardClick = (e: React.MouseEvent) => {
+    // Only navigate if click wasn't on an interactive child element (button, a, input)
+    const target = e.target as HTMLElement;
+    if (target.closest("button") || target.closest("a")) {
+      return;
+    }
+    router.push(productUrl);
+  };
+
   return (
-    <div className="group flex flex-col bg-white rounded-xl overflow-hidden border border-stone-200 hover:border-stone-400 shadow-2xs hover:shadow-lg transition-all duration-300 w-full min-w-0">
+    <div
+      onClick={handleCardClick}
+      className="group flex flex-col bg-white rounded-xl overflow-hidden border border-stone-200 hover:border-stone-400 shadow-2xs hover:shadow-lg transition-all duration-300 w-full min-w-0 cursor-pointer"
+    >
       {/* Product Image Frame */}
-      <div className="relative aspect-[3/4] w-full bg-stone-100 overflow-hidden">
+      <Link
+        href={productUrl}
+        className="relative aspect-[3/4] w-full bg-stone-100 overflow-hidden block"
+      >
         <Image
           src={imageSource}
           alt={product.name}
@@ -43,7 +64,7 @@ export default function ProductCard({ product, onQuickView }: ProductCardProps) 
 
         {/* Promo Badge on top-left (e.g. BUY 2 GET 1 FREE) */}
         {product.badge && (
-          <div className="absolute top-2 left-2 z-10">
+          <div className="absolute top-2 left-2 z-10 pointer-events-none">
             <span className="inline-block bg-[#D32F2F] text-white text-[9px] font-bold px-1.5 py-0.5 rounded-xs shadow-xs tracking-tight uppercase max-w-[85px] sm:max-w-none truncate leading-tight">
               {product.badge}
             </span>
@@ -55,27 +76,24 @@ export default function ProductCard({ product, onQuickView }: ProductCardProps) 
           <button
             type="button"
             onClick={(e) => {
+              e.preventDefault();
               e.stopPropagation();
               onQuickView?.(product);
             }}
             aria-label="Quick View"
-            className="w-7 h-7 sm:w-8 sm:h-8 rounded-full bg-white/95 backdrop-blur-xs flex items-center justify-center text-stone-700 hover:bg-white hover:text-[#58111A] transition shadow-xs"
+            className="w-7 h-7 sm:w-8 sm:h-8 rounded-full bg-white/95 backdrop-blur-xs flex items-center justify-center text-stone-700 hover:bg-white hover:text-[#58111A] transition shadow-xs cursor-pointer"
           >
             <Eye className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
           </button>
         </div>
 
         {/* Desktop Quick "View Details" Overlay Button */}
-        <div className="hidden sm:block absolute inset-x-3 bottom-3 opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-10">
-          <button
-            type="button"
-            onClick={() => onQuickView?.(product)}
-            className="w-full py-2 px-3 rounded-lg bg-white/95 hover:bg-white text-stone-800 hover:text-[#58111A] text-xs font-semibold tracking-wider uppercase shadow-md transition text-center"
-          >
-            Quick View
-          </button>
+        <div className="hidden sm:block absolute inset-x-3 bottom-3 opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-10 pointer-events-none">
+          <div className="w-full py-2 px-3 rounded-lg bg-white/95 text-stone-800 text-xs font-semibold tracking-wider uppercase shadow-md text-center">
+            View Details
+          </div>
         </div>
-      </div>
+      </Link>
 
       {/* Card Info Section */}
       <div className="p-2 sm:p-3.5 flex-1 flex flex-col justify-between bg-white min-w-0">
@@ -91,13 +109,14 @@ export default function ProductCard({ product, onQuickView }: ProductCardProps) 
           </div>
 
           {/* Product Name */}
-          <h3
-            onClick={() => onQuickView?.(product)}
-            className="text-xs sm:text-sm font-medium text-stone-900 hover:text-[#58111A] line-clamp-1 sm:line-clamp-2 cursor-pointer transition leading-snug"
-            title={product.name}
-          >
-            {product.name}
-          </h3>
+          <Link href={productUrl} className="block group/link">
+            <h3
+              className="text-xs sm:text-sm font-medium text-stone-900 group-hover/link:text-[#58111A] line-clamp-1 sm:line-clamp-2 transition leading-snug"
+              title={product.name}
+            >
+              {product.name}
+            </h3>
+          </Link>
 
           {/* Price Container */}
           <div className="mt-1 sm:mt-1.5 flex items-baseline space-x-1.5 flex-wrap">
@@ -120,12 +139,13 @@ export default function ProductCard({ product, onQuickView }: ProductCardProps) 
                   type="button"
                   title={c.name}
                   onClick={(e) => {
+                    e.preventDefault();
                     e.stopPropagation();
                     setCurrentImageIdx(c.imageIndex);
                     setSelectedColor(c.name);
                   }}
                   style={{ backgroundColor: c.hex }}
-                  className={`w-3.5 h-3.5 sm:w-4 sm:h-4 rounded-full border transition-transform ${
+                  className={`w-3.5 h-3.5 sm:w-4 sm:h-4 rounded-full border transition-transform cursor-pointer ${
                     currentImageIdx === c.imageIndex
                       ? "ring-2 ring-offset-1 ring-[#58111A] scale-110"
                       : "border-stone-300 opacity-80 hover:opacity-100"
@@ -154,7 +174,8 @@ export default function ProductCard({ product, onQuickView }: ProductCardProps) 
             })}
             target="_blank"
             rel="noopener noreferrer"
-            className="w-full flex items-center justify-center space-x-1 py-1.5 px-2 sm:py-2 sm:px-3 rounded-lg bg-[#25D366]/10 hover:bg-[#25D366] text-[#128C7E] hover:text-white border border-[#25D366]/30 transition-all duration-200 text-[11px] sm:text-xs font-semibold group/btn truncate"
+            onClick={(e) => e.stopPropagation()}
+            className="w-full flex items-center justify-center space-x-1 py-1.5 px-2 sm:py-2 sm:px-3 rounded-lg bg-[#25D366]/10 hover:bg-[#25D366] text-[#128C7E] hover:text-white border border-[#25D366]/30 transition-all duration-200 text-[11px] sm:text-xs font-semibold group/btn truncate cursor-pointer"
           >
             <MessageCircle className="w-3 h-3 sm:w-3.5 sm:h-3.5 text-[#25D366] group-hover/btn:text-white transition-colors shrink-0" />
             <span className="truncate">WhatsApp Enquiry</span>

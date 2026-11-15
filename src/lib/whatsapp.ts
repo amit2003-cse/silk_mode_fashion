@@ -8,6 +8,7 @@ export interface WhatsAppProductParams {
   category?: string;
   code?: string;
   color?: string;
+  productUrl?: string;
 }
 
 /**
@@ -25,7 +26,7 @@ I am interested in this saree:
 
 *Product:* ${product.name}
 *Price:* ${formattedPrice}
-${product.category ? `*Category:* ${product.category}\n` : ""}${product.color ? `*Color / Shade:* ${product.color}\n` : ""}${product.code ? `*Code:* ${product.code}\n` : ""}
+${product.category ? `*Category:* ${product.category}\n` : ""}${product.color ? `*Color / Shade:* ${product.color}\n` : ""}${product.code ? `*Code:* ${product.code}\n` : ""}${product.productUrl ? `*Link:* ${product.productUrl}\n` : ""}
 Please share more details, fabric quality, and real photos/videos on WhatsApp. Thank you!`;
 
   return `https://wa.me/${WHATSAPP_COUNTRY_CODE}${CLIENT_PHONE}?text=${encodeURIComponent(message)}`;

@@ -208,3 +208,32 @@ export const PRODUCTS_DATA: SareeProduct[] = [
   },
 ];
 
+/**
+ * Get product by slug or id
+ */
+export function getProductBySlug(slug: string): SareeProduct | undefined {
+  if (!slug) return undefined;
+  const decoded = decodeURIComponent(slug).toLowerCase();
+  return PRODUCTS_DATA.find(
+    (p) => p.slug.toLowerCase() === decoded || p.id.toLowerCase() === decoded
+  );
+}
+
+/**
+ * Get related products (same category first, then others)
+ */
+export function getRelatedProducts(currentSlug: string, limit: number = 4): SareeProduct[] {
+  const current = getProductBySlug(currentSlug);
+  if (!current) return PRODUCTS_DATA.slice(0, limit);
+
+  const sameCategory = PRODUCTS_DATA.filter(
+    (p) => p.id !== current.id && p.category === current.category
+  );
+  const others = PRODUCTS_DATA.filter(
+    (p) => p.id !== current.id && p.category !== current.category
+  );
+
+  return [...sameCategory, ...others].slice(0, limit);
+}
+
+

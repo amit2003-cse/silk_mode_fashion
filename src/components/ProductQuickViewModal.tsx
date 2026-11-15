@@ -2,7 +2,8 @@
 
 import React, { useState, useEffect } from "react";
 import Image from "next/image";
-import { X, MessageCircle, CheckCircle, Sparkles } from "lucide-react";
+import Link from "next/link";
+import { X, MessageCircle, CheckCircle, Sparkles, ArrowRight } from "lucide-react";
 import { SareeProduct } from "@/data/products";
 import { getProductWhatsAppUrl } from "@/lib/whatsapp";
 
@@ -187,8 +188,17 @@ export default function ProductQuickViewModal({ product, onClose }: ProductQuick
             </div>
           </div>
 
-          {/* WhatsApp Direct Action Button with Selected Color */}
-          <div className="mt-5 pt-3 border-t border-stone-100">
+          {/* Actions: View Details & WhatsApp Direct */}
+          <div className="mt-5 pt-3 border-t border-stone-100 space-y-2">
+            <Link
+              href={`/products/${product.slug}`}
+              onClick={onClose}
+              className="w-full flex items-center justify-center space-x-1.5 py-2 px-4 rounded-xl border border-stone-300 hover:border-[#58111A] text-stone-700 hover:text-[#58111A] text-xs font-semibold hover:bg-stone-50 transition"
+            >
+              <span>View Complete Product Details</span>
+              <ArrowRight className="w-3.5 h-3.5" />
+            </Link>
+
             <a
               href={getProductWhatsAppUrl({
                 name: product.name,
