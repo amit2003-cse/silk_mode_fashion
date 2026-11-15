@@ -324,7 +324,7 @@ export default function ProductDetailClient({
                   </span>
                 </div>
 
-                <div className="flex items-center space-x-3">
+                <div className="flex items-center flex-wrap gap-2">
                   {product.colors.map((c, idx) => (
                     <button
                       key={idx}

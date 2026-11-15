@@ -116,32 +116,33 @@ export default function ProductCard({ product, onQuickView }: ProductCardProps) 
 
           {/* Interactive Color Swatches (Method 1) */}
           {product.colors && product.colors.length > 1 && (
-            <div className="flex items-center space-x-1.5 mt-2 pt-1 border-t border-stone-100">
-              {product.colors.map((c, idx) => (
-                <button
-                  key={idx}
-                  type="button"
-                  title={c.name}
-                  onClick={(e) => {
-                    e.preventDefault();
-                    e.stopPropagation();
-                    setCurrentImageIdx(c.imageIndex);
-                    setSelectedColor(c.name);
-                  }}
-                  style={{ backgroundColor: c.hex }}
-                  className={`w-3.5 h-3.5 sm:w-4 sm:h-4 rounded-full border transition-transform cursor-pointer ${
-                    currentImageIdx === c.imageIndex
-                      ? "ring-2 ring-offset-1 ring-[#58111A] scale-110"
-                      : "border-stone-300 opacity-80 hover:opacity-100"
-                  }`}
-                  aria-label={`Select ${c.name}`}
-                />
-              ))}
-              {selectedColor && (
-                <span className="text-[10px] text-stone-500 truncate ml-1 font-medium">
-                  {selectedColor}
-                </span>
-              )}
+            <div className="mt-2 pt-1.5 border-t border-stone-100">
+              <div className="flex items-center justify-between text-[10px] text-stone-500 mb-1">
+                <span>{product.colors.length} Shades</span>
+                <span className="font-semibold text-stone-800 truncate max-w-[90px]">{selectedColor}</span>
+              </div>
+              <div className="flex items-center flex-wrap gap-1.5">
+                {product.colors.map((c, idx) => (
+                  <button
+                    key={idx}
+                    type="button"
+                    title={c.name}
+                    onClick={(e) => {
+                      e.preventDefault();
+                      e.stopPropagation();
+                      setCurrentImageIdx(c.imageIndex);
+                      setSelectedColor(c.name);
+                    }}
+                    style={{ backgroundColor: c.hex }}
+                    className={`w-3.5 h-3.5 sm:w-4 sm:h-4 rounded-full border transition-transform cursor-pointer ${
+                      currentImageIdx === c.imageIndex
+                        ? "ring-2 ring-offset-1 ring-[#58111A] scale-110"
+                        : "border-stone-300 opacity-80 hover:opacity-100"
+                    }`}
+                    aria-label={`Select ${c.name}`}
+                  />
+                ))}
+              </div>
             </div>
           )}
         </div>
