@@ -479,6 +479,14 @@ export default function ProductDetailClient({
                         {product.blouseDetails || "0.8m Matching Unstitched Blouse Piece Included"}
                       </span>
                     </div>
+                    {product.weight && (
+                      <div className="grid grid-cols-3 py-1.5 border-b border-stone-100">
+                        <span className="font-semibold text-stone-500">Weight</span>
+                        <span className="col-span-2 text-stone-900 font-medium">
+                          {product.weight}
+                        </span>
+                      </div>
+                    )}
                     <div className="grid grid-cols-3 py-1.5 border-b border-stone-100">
                       <span className="font-semibold text-stone-500">Occasion</span>
                       <span className="col-span-2 text-stone-900 font-medium">

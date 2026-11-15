@@ -173,6 +173,12 @@ export default function ProductQuickViewModal({ product, onClose }: ProductQuick
                   <span className="font-semibold">{product.blouseDetails}</span>
                 </div>
               )}
+              {product.weight && (
+                <div className="flex justify-between">
+                  <span className="text-stone-500">Weight:</span>
+                  <span className="font-semibold">{product.weight}</span>
+                </div>
+              )}
             </div>
 
             {/* Trust tags */}
