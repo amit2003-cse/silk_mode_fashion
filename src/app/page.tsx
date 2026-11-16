@@ -46,8 +46,8 @@ export default function HomePage() {
       {/* 3. Auto-Swapping 2-Slide Hero Carousel with Next/Prev Arrows */}
       <HeroBanner />
 
-      {/* 4. Shop by Collection (6 circles desktop, 3x2 mobile) */}
-      <ShopByCollection onSelectCategory={handleSelectCategory} />
+      {/* 4. Shop by Collection (Temporarily hidden on request) */}
+      {/* <ShopByCollection onSelectCategory={handleSelectCategory} /> */}
 
       {/* 5. Trending Collection (4 columns desktop, 2 columns mobile) */}
       <TrendingCollection onQuickView={handleQuickView} />
