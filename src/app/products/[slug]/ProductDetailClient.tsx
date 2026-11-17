@@ -469,14 +469,20 @@ export default function ProductDetailClient({
                     </div>
                     <div className="grid grid-cols-3 py-1.5 border-b border-stone-100">
                       <span className="font-semibold text-stone-500">
-                        {product.category.toLowerCase().includes("lehenga") ? "Flair & Sizing" : "Length"}
+                        {product.category.toLowerCase().includes("lehenga")
+                          ? "Flair & Sizing"
+                          : product.category.toLowerCase().includes("suit")
+                          ? "Inclusions"
+                          : "Length"}
                       </span>
                       <span className="col-span-2 text-stone-900 font-medium">
                         {product.sareeLength || "5.5 Meters Standard"}
                       </span>
                     </div>
                     <div className="grid grid-cols-3 py-1.5 border-b border-stone-100">
-                      <span className="font-semibold text-stone-500">Blouse Piece</span>
+                      <span className="font-semibold text-stone-500">
+                        {product.category.toLowerCase().includes("suit") ? "Available Sizes" : "Blouse Piece"}
+                      </span>
                       <span className="col-span-2 text-stone-900 font-medium">
                         {product.blouseDetails || "0.8m Matching Unstitched Blouse Piece Included"}
                       </span>

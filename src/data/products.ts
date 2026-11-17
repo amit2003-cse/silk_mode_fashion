@@ -264,6 +264,33 @@ export const PRODUCTS_DATA: SareeProduct[] = [
     featured: true,
     inStock: true,
   },
+  {
+    id: "sm-st-08",
+    slug: "designer-maslin-aari-work-suit-set-original-mirror",
+    name: "Designer Maslin Silk Aari Work Suit Set with Original Mirror Detailing",
+    category: "Salwar Suit",
+    code: "SM-SUT-199",
+    price: 1999,
+    originalPrice: 3999,
+    badge: "SIZES UP TO 10XL",
+    description: "Beautiful digital print and intricate Aari work Designer Suit Set, crafted in premium Maslin fabric enhanced with original mirror work detailing. Complete 3-piece luxury set including Top Kurta, Bottom, and Dupatta. Available in sizes M 40 up to 10XL 60.",
+    fabric: "Premium Maslin with Aari Work",
+    work: "Digital Print, Intricate Hand Aari Work & Original Mirror Detailing",
+    sareeLength: "Complete 3-Piece Set: Top Kurta, Bottom Trouser & Dupatta",
+    blouseDetails: "Sizes: L 38 / M 40 / XL 42 / XXL 44 / 3XL 46 / 4XL 48 / 5XL 50 / 6XL 52 / 7XL 54 / 8XL 56 / 9XL 58 / 10XL 60",
+    weight: "0.850 kg",
+    images: [
+      "/images/products/maslin-suit-model-front.jpg",
+      "/images/products/maslin-suit-model-walk.jpg",
+      "/images/products/maslin-suit-flatlay-detail.jpg",
+    ],
+    colors: [
+      { name: "Coffee Beige & Rust", hex: "#5A2E28", imageIndex: 0 },
+    ],
+    trending: true,
+    featured: true,
+    inStock: true,
+  },
 ];
 
 /**
