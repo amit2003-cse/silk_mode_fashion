@@ -233,6 +233,37 @@ export const PRODUCTS_DATA: SareeProduct[] = [
     featured: true,
     inStock: true,
   },
+  {
+    id: "sm-lhg-07",
+    slug: "heavy-chinon-designer-lehenga-choli-cancan",
+    name: "Heavy Chinon Designer Embroidered Lehenga Choli with Cancan",
+    category: "Bridal Lehenga",
+    code: "3071 / 3072",
+    price: 3395,
+    originalPrice: 6999,
+    badge: "CANCAN ATTACHED",
+    description: "Heavy Chinon designer lehenga collection with all-matching heavy Chinon blouse and heavy Chinon dupatta. Pleated royal flare attached with standard cancan inner for authentic wedding silhouette. Single piece & set to set available.",
+    fabric: "Heavy Chinon Silk (Lehenga, Blouse & Dupatta)",
+    work: "Floral Resham & Zari Hand Embroidery with Scalloped Border",
+    sareeLength: "Pleated Royal Flair (Comes with Attached Cancan)",
+    blouseDetails: "Heavy Chinon Designer Embroidered Blouse Included",
+    weight: "Flared with Cancan Inner",
+    images: [
+      "/images/products/chinon-lehenga-3071-front.jpg",
+      "/images/products/chinon-lehenga-3071-side.jpg",
+      "/images/products/chinon-lehenga-3071-seated.jpg",
+      "/images/products/chinon-lehenga-3072-front.jpg",
+      "/images/products/chinon-lehenga-3072-seated.jpg",
+      "/images/products/chinon-lehenga-3072-portrait.jpg",
+    ],
+    colors: [
+      { name: "Rust Terracotta (3071)", hex: "#C85A27", imageIndex: 0 },
+      { name: "Royal Peacock Blue (3072)", hex: "#1F487E", imageIndex: 3 },
+    ],
+    trending: true,
+    featured: true,
+    inStock: true,
+  },
 ];
 
 /**
