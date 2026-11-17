@@ -325,6 +325,38 @@ export const PRODUCTS_DATA: SareeProduct[] = [
     featured: true,
     inStock: true,
   },
+  {
+    id: "sm-lhg-10",
+    slug: "designer-handwork-chandnia-silk-lehenga-choli",
+    name: "Designer Handwork Chandnia Silk Lehenga Choli with Crystal Beads Work",
+    category: "Bridal Lehenga",
+    code: "3111-A / 3111-B / 3111-C",
+    price: 11599,
+    originalPrice: 24999,
+    badge: "DESIGNER HANDWORK",
+    description: "Designer Handwork Lehenga Choli crafted in premium Chandnia Silk. Exquisitely adorned with handwork motifs, crystal beads work, multi-thread embroidery, and intricate dori & sequins work. Standard cancan and canvas attached (free size up to 42). Complete with 1-meter unstitched blouse featuring front and back work, and 2.5-meter Chandnia Silk dupatta with four-side lace and butti work all over.",
+    fabric: "Chandnia Silk (Lehenga, Blouse & Dupatta)",
+    work: "Handwork Motif, Crystal Beads Work, Multi Thread Work, Dori & Sequins Work",
+    sareeLength: "Lehenga: Free Size up to 42 (Standard Cancan & Canvas Attached)",
+    blouseDetails: "Chandnia Silk with Same Work (1 Meter Unstitched, Front & Back Work)",
+    weight: "Heavy Designer Weight (Cancan & Canvas Attached)",
+    images: [
+      "/images/products/chandnia-lehenga-3111a-front.jpg",
+      "/images/products/chandnia-lehenga-3111a-detail.jpg",
+      "/images/products/chandnia-lehenga-3111b-front.jpg",
+      "/images/products/chandnia-lehenga-3111b-back.jpg",
+      "/images/products/chandnia-lehenga-3111c-front.jpg",
+      "/images/products/chandnia-lehenga-3111c-back.jpg",
+    ],
+    colors: [
+      { name: "Mauve Rose (3111-A)", hex: "#8A5657", imageIndex: 0 },
+      { name: "Antique Bronze Ochre (3111-B)", hex: "#9B7243", imageIndex: 2 },
+      { name: "Slate Teal Cyan (3111-C)", hex: "#3C676E", imageIndex: 4 },
+    ],
+    trending: true,
+    featured: true,
+    inStock: true,
+  },
 ];
 
 /**
