@@ -163,7 +163,9 @@ export default function ProductQuickViewModal({ product, onClose }: ProductQuick
               )}
               {product.sareeLength && (
                 <div className="flex justify-between">
-                  <span className="text-stone-500">Saree Length:</span>
+                  <span className="text-stone-500">
+                    {product.category.toLowerCase().includes("lehenga") ? "Flair & Sizing:" : "Saree Length:"}
+                  </span>
                   <span className="font-semibold">{product.sareeLength}</span>
                 </div>
               )}

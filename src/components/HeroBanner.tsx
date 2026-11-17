@@ -29,13 +29,13 @@ const HERO_SLIDES: HeroSlide[] = [
   },
   {
     id: 2,
-    tagline: "BEST SELLER COLLECTION",
-    title: "Pure Handloom",
-    titleHighlight: "Masterpieces",
-    subtitle: "Exquisite Kanjivaram zari tissue drapes handcrafted with timeless royal embroidery.",
-    ctaText: "EXPLORE BEST SELLERS",
-    ctaLink: "/#bestsellers",
-    desktopImage: "/images/products/kanjivaram-zari-tissue-2.jpg",
+    tagline: "HEAVY BRIDAL MASTERPIECE",
+    title: "Royal Bridal",
+    titleHighlight: "Lehenga Choli",
+    subtitle: "Gadhwal silk crafted in crystal beads & motif work, 4.5m+ flair with double dupatta.",
+    ctaText: "VIEW LEHENGA • ₹18,999",
+    ctaLink: "/products/bridal-lehenga-choli-gadhwal-silk-crystal-beads-work",
+    desktopImage: "/images/products/bridal-lehenga-3116b-front.jpg",
   },
 ];
 
