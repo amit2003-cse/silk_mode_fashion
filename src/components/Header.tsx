@@ -57,7 +57,7 @@ export default function Header({ onSelectProduct }: HeaderProps) {
     <>
       <header className="sticky top-0 z-40 bg-white border-b border-stone-200 shadow-2xs transition-all">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex items-center justify-between h-20 md:h-22">
+          <div className="flex items-center justify-between min-h-[84px] lg:min-h-[94px] py-1.5 lg:py-2">
             {/* Mobile Menu Button (Left on mobile) */}
             <div className="flex items-center lg:hidden">
               <button
@@ -71,9 +71,9 @@ export default function Header({ onSelectProduct }: HeaderProps) {
             </div>
 
             {/* Brand Logo - Vastrang style (Golden Emblem on top + Brand name below) */}
-            <div className="lg:static absolute left-1/2 -translate-x-1/2 lg:translate-x-0 flex items-center justify-center z-10">
-              <Link href="/" className="flex flex-col items-center justify-center group py-0.5">
-                <div className="relative w-10 h-10 sm:w-11 sm:h-11 md:w-11.5 md:h-11.5 transition-transform group-hover:scale-105 duration-200">
+            <div className="lg:static absolute left-1/2 -translate-x-1/2 lg:translate-x-0 flex items-center justify-center z-10 shrink-0">
+              <Link href="/" className="flex flex-col items-center justify-center group py-0.5 shrink-0">
+                <div className="relative w-9.5 h-9.5 sm:w-10 sm:h-10 lg:w-11 lg:h-11 transition-transform group-hover:scale-105 duration-200">
                   <Image
                     src="/images/da66b080-7b45-45d1-bba8-14e0583018dc.png"
                     alt="Silk Mode Fashion Logo"
@@ -82,22 +82,22 @@ export default function Header({ onSelectProduct }: HeaderProps) {
                     priority
                   />
                 </div>
-                <span className="font-serif-luxury text-[13px] sm:text-[14px] md:text-[15px] font-bold tracking-[0.24em] text-[#1F1E1D] uppercase leading-tight mt-1 group-hover:text-[#58111A] transition-colors text-center">
+                <span className="font-serif-luxury text-[13px] sm:text-[14px] lg:text-[14.5px] font-bold tracking-[0.22em] text-[#1F1E1D] uppercase leading-none mt-1.5 group-hover:text-[#58111A] transition-colors text-center whitespace-nowrap">
                   SILK MODE
                 </span>
-                <span className="text-[8.5px] sm:text-[9.5px] md:text-[10px] tracking-[0.38em] text-[#6A635B] uppercase font-semibold leading-none mt-0.5 text-center">
+                <span className="text-[8px] sm:text-[8.5px] lg:text-[9px] tracking-[0.36em] text-[#6A635B] uppercase font-semibold leading-none mt-1 text-center whitespace-nowrap">
                   FASHION
                 </span>
               </Link>
             </div>
 
             {/* Desktop Navigation Links */}
-            <nav className="hidden lg:flex items-center space-x-7 xl:space-x-8">
+            <nav className="hidden lg:flex items-center space-x-3 xl:space-x-5.5 min-w-0">
               {navLinks.map((link) => (
                 <Link
                   key={link.label}
                   href={link.href}
-                  className="text-sm font-medium tracking-normal text-stone-800 hover:text-[#58111A] relative py-1 transition-colors"
+                  className="text-[13px] xl:text-sm font-medium tracking-normal text-stone-800 hover:text-[#58111A] relative py-1 transition-colors whitespace-nowrap"
                 >
                   {link.label}
                 </Link>
@@ -105,9 +105,9 @@ export default function Header({ onSelectProduct }: HeaderProps) {
             </nav>
 
             {/* Actions: Search Input & WhatsApp Header Contact */}
-            <div className="flex items-center space-x-3">
+            <div className="flex items-center space-x-2.5 xl:space-x-3 shrink-0">
               {/* Desktop Search Input (Exact Vastrang Style: "I'm looking for...") */}
-              <div className="relative hidden md:block w-52 lg:w-64">
+              <div className="relative hidden md:block w-44 lg:w-48 xl:w-60">
                 <div className="relative flex items-center">
                   <Search className="w-4 h-4 text-stone-400 absolute left-3.5 pointer-events-none" />
                   <input
