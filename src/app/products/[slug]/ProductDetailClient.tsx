@@ -12,6 +12,7 @@ import {
   Video,
   Sparkles,
   ChevronRight,
+  ChevronLeft,
   ArrowLeft,
   ChevronDown,
   Info,
@@ -44,6 +45,81 @@ export default function ProductDetailClient({
   const [isLightboxOpen, setIsLightboxOpen] = useState(false);
   const [imageError, setImageError] = useState(false);
   const [activeTab, setActiveTab] = useState<"specs" | "story" | "care">("specs");
+
+  // Next / Previous Image handlers for carousel & swipe
+  const goToNextImage = () => {
+    if (!product.images || product.images.length <= 1) return;
+    setSelectedImageIdx((prev) => (prev + 1) % product.images.length);
+  };
+
+  const goToPrevImage = () => {
+    if (!product.images || product.images.length <= 1) return;
+    setSelectedImageIdx((prev) => (prev - 1 + product.images.length) % product.images.length);
+  };
+
+  // Touch Swipe handlers
+  const [touchStart, setTouchStart] = useState<{ x: number; y: number } | null>(null);
+  const [touchEnd, setTouchEnd] = useState<{ x: number; y: number } | null>(null);
+
+  const handleTouchStart = (e: React.TouchEvent) => {
+    setTouchEnd(null);
+    setTouchStart({
+      x: e.targetTouches[0].clientX,
+      y: e.targetTouches[0].clientY,
+    });
+  };
+
+  const handleTouchMove = (e: React.TouchEvent) => {
+    setTouchEnd({
+      x: e.targetTouches[0].clientX,
+      y: e.targetTouches[0].clientY,
+    });
+  };
+
+  const handleTouchEnd = () => {
+    if (!touchStart || !touchEnd) return;
+    const distanceX = touchStart.x - touchEnd.x;
+    const distanceY = touchStart.y - touchEnd.y;
+    const isHorizontalSwipe = Math.abs(distanceX) > Math.abs(distanceY);
+
+    if (isHorizontalSwipe && Math.abs(distanceX) > 35) {
+      if (distanceX > 0) {
+        // Swiped left -> Next image
+        goToNextImage();
+      } else {
+        // Swiped right -> Previous image
+        goToPrevImage();
+      }
+    }
+  };
+
+  // Mouse Drag handlers for desktop swipe preview
+  const [mouseStartX, setMouseStartX] = useState<number | null>(null);
+  const [isMouseDown, setIsMouseDown] = useState(false);
+
+  const handleMouseDown = (e: React.MouseEvent) => {
+    setIsMouseDown(true);
+    setMouseStartX(e.clientX);
+  };
+
+  const handleMouseUp = (e: React.MouseEvent) => {
+    if (!isMouseDown || mouseStartX === null) return;
+    const distanceX = mouseStartX - e.clientX;
+    if (Math.abs(distanceX) > 35) {
+      if (distanceX > 0) {
+        goToNextImage();
+      } else {
+        goToPrevImage();
+      }
+    }
+    setIsMouseDown(false);
+    setMouseStartX(null);
+  };
+
+  const handleMouseLeave = () => {
+    setIsMouseDown(false);
+    setMouseStartX(null);
+  };
 
   // Format pricing
   const formattedPrice = `₹${product.price.toLocaleString("en-IN")}`;
@@ -148,17 +224,60 @@ export default function ProductDetailClient({
           
           {/* ================= LEFT COLUMN: MEDIA GALLERY ================= */}
           <div className="lg:col-span-7 space-y-4">
-            {/* Main Image Container */}
-            <div className="relative aspect-[3/4] sm:aspect-[4/5] w-full rounded-2xl overflow-hidden bg-white border border-stone-200 shadow-sm group">
+            {/* Main Image Container with Touch & Drag Swipe */}
+            <div
+              className="relative aspect-[3/4] sm:aspect-[4/5] w-full rounded-2xl overflow-hidden bg-white border border-stone-200 shadow-sm group select-none touch-pan-y cursor-grab active:cursor-grabbing"
+              onTouchStart={handleTouchStart}
+              onTouchMove={handleTouchMove}
+              onTouchEnd={handleTouchEnd}
+              onMouseDown={handleMouseDown}
+              onMouseUp={handleMouseUp}
+              onMouseLeave={handleMouseLeave}
+            >
               <Image
+                key={activeImage}
                 src={activeImage}
                 alt={product.name}
                 fill
                 priority
                 onError={() => setImageError(true)}
                 sizes="(max-width: 768px) 100vw, 55vw"
-                className="object-cover object-center transition-transform duration-700 group-hover:scale-105"
+                className="object-cover object-center transition-all duration-300 group-hover:scale-102 pointer-events-none"
               />
+
+              {/* Prev / Next Navigation Arrows */}
+              {product.images && product.images.length > 1 && (
+                <>
+                  <button
+                    type="button"
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      goToPrevImage();
+                    }}
+                    aria-label="Previous Image"
+                    className="absolute left-2.5 sm:left-4 top-1/2 -translate-y-1/2 z-20 w-9 h-9 sm:w-10 sm:h-10 rounded-full bg-white/90 hover:bg-white text-stone-800 shadow-md flex items-center justify-center transition-all opacity-85 hover:opacity-100 hover:scale-105 active:scale-95 cursor-pointer"
+                  >
+                    <ChevronLeft className="w-5 h-5 text-stone-800" />
+                  </button>
+
+                  <button
+                    type="button"
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      goToNextImage();
+                    }}
+                    aria-label="Next Image"
+                    className="absolute right-2.5 sm:right-4 top-1/2 -translate-y-1/2 z-20 w-9 h-9 sm:w-10 sm:h-10 rounded-full bg-white/90 hover:bg-white text-stone-800 shadow-md flex items-center justify-center transition-all opacity-85 hover:opacity-100 hover:scale-105 active:scale-95 cursor-pointer"
+                  >
+                    <ChevronRight className="w-5 h-5 text-stone-800" />
+                  </button>
+
+                  {/* Image Counter Badge */}
+                  <div className="absolute top-4 left-1/2 -translate-x-1/2 z-10 bg-black/60 backdrop-blur-xs text-white text-[11px] font-semibold px-2.5 py-0.5 rounded-full shadow-xs pointer-events-none tracking-wide">
+                    {selectedImageIdx + 1} / {product.images.length}
+                  </div>
+                </>
+              )}
 
               {/* Promo Badge on top-left */}
               {product.badge && (
@@ -201,7 +320,7 @@ export default function ProductDetailClient({
               {/* Click to Zoom Pill Indicator */}
               <div
                 onClick={() => setIsLightboxOpen(true)}
-                className="absolute bottom-4 left-1/2 -translate-x-1/2 bg-white/90 backdrop-blur-xs px-3.5 py-1.5 rounded-full text-[11px] font-medium text-stone-700 shadow-xs flex items-center space-x-1.5 opacity-90 hover:opacity-100 cursor-pointer transition"
+                className="absolute bottom-4 left-1/2 -translate-x-1/2 bg-white/90 backdrop-blur-xs px-3.5 py-1.5 rounded-full text-[11px] font-medium text-stone-700 shadow-xs flex items-center space-x-1.5 opacity-90 hover:opacity-100 cursor-pointer transition z-10"
               >
                 <Maximize2 className="w-3 h-3 text-[#58111A]" />
                 <span>Tap to view full resolution</span>
@@ -560,32 +679,65 @@ export default function ProductDetailClient({
       {/* ================= FULL-SCREEN IMAGE LIGHTBOX MODAL ================= */}
       {isLightboxOpen && (
         <div
-          className="fixed inset-0 z-50 bg-black/95 flex flex-col items-center justify-center p-4 backdrop-blur-md animate-fade-in"
+          className="fixed inset-0 z-50 bg-black/95 flex flex-col items-center justify-center p-4 backdrop-blur-md animate-fade-in select-none touch-pan-y"
           onClick={() => setIsLightboxOpen(false)}
+          onTouchStart={handleTouchStart}
+          onTouchMove={handleTouchMove}
+          onTouchEnd={handleTouchEnd}
         >
           <button
             type="button"
             onClick={() => setIsLightboxOpen(false)}
             aria-label="Close Lightbox"
-            className="absolute top-5 right-5 w-10 h-10 rounded-full bg-white/20 hover:bg-white/40 text-white flex items-center justify-center transition cursor-pointer"
+            className="absolute top-5 right-5 w-10 h-10 rounded-full bg-white/20 hover:bg-white/40 text-white flex items-center justify-center transition cursor-pointer z-30"
           >
             <X className="w-5 h-5" />
           </button>
+
+          {/* Prev / Next buttons in Lightbox */}
+          {product.images && product.images.length > 1 && (
+            <>
+              <button
+                type="button"
+                onClick={(e) => {
+                  e.stopPropagation();
+                  goToPrevImage();
+                }}
+                aria-label="Previous image"
+                className="absolute left-4 top-1/2 -translate-y-1/2 w-11 h-11 rounded-full bg-white/20 hover:bg-white/40 text-white flex items-center justify-center transition cursor-pointer z-30"
+              >
+                <ChevronLeft className="w-6 h-6" />
+              </button>
+
+              <button
+                type="button"
+                onClick={(e) => {
+                  e.stopPropagation();
+                  goToNextImage();
+                }}
+                aria-label="Next image"
+                className="absolute right-4 top-1/2 -translate-y-1/2 w-11 h-11 rounded-full bg-white/20 hover:bg-white/40 text-white flex items-center justify-center transition cursor-pointer z-30"
+              >
+                <ChevronRight className="w-6 h-6" />
+              </button>
+            </>
+          )}
 
           <div
             className="relative w-full max-w-3xl max-h-[85vh] aspect-[3/4] sm:aspect-[4/5]"
             onClick={(e) => e.stopPropagation()}
           >
             <Image
+              key={activeImage}
               src={activeImage}
               alt={product.name}
               fill
-              className="object-contain"
+              className="object-contain pointer-events-none"
             />
           </div>
 
           <p className="mt-4 text-xs text-white/70 font-medium">
-            {product.name} · {selectedColor || "Primary Shade"}
+            {product.name} · ({selectedImageIdx + 1} of {product.images.length}) · Swipe left/right to change
           </p>
         </div>
       )}

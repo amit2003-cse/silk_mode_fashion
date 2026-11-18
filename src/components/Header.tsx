@@ -70,7 +70,7 @@ export default function Header({ onSelectProduct }: HeaderProps) {
             {/* Brand Logo - Vastrang style (Golden Emblem on top + Brand name below) */}
             <div className="lg:static absolute left-1/2 -translate-x-1/2 lg:translate-x-0 flex items-center justify-center z-10">
               <Link href="/" className="flex flex-col items-center justify-center group py-0.5">
-                <div className="relative w-9 h-9 sm:w-10 sm:h-10 md:w-10.5 md:h-10.5 transition-transform group-hover:scale-105 duration-200">
+                <div className="relative w-10 h-10 sm:w-11 sm:h-11 md:w-11.5 md:h-11.5 transition-transform group-hover:scale-105 duration-200">
                   <Image
                     src="/images/da66b080-7b45-45d1-bba8-14e0583018dc.png"
                     alt="Silk Mode Fashion Logo"
@@ -79,10 +79,10 @@ export default function Header({ onSelectProduct }: HeaderProps) {
                     priority
                   />
                 </div>
-                <span className="font-serif-luxury text-[11px] sm:text-[12px] md:text-[12.5px] font-bold tracking-[0.22em] text-[#1F1E1D] uppercase leading-tight mt-1 group-hover:text-[#58111A] transition-colors text-center">
+                <span className="font-serif-luxury text-[13px] sm:text-[14px] md:text-[15px] font-bold tracking-[0.24em] text-[#1F1E1D] uppercase leading-tight mt-1 group-hover:text-[#58111A] transition-colors text-center">
                   SILK MODE
                 </span>
-                <span className="text-[7.5px] sm:text-[8px] md:text-[8.5px] tracking-[0.35em] text-[#7A726A] uppercase font-medium leading-none -mt-0.5 text-center">
+                <span className="text-[8.5px] sm:text-[9.5px] md:text-[10px] tracking-[0.38em] text-[#6A635B] uppercase font-semibold leading-none mt-0.5 text-center">
                   FASHION
                 </span>
               </Link>
@@ -254,10 +254,10 @@ export default function Header({ onSelectProduct }: HeaderProps) {
                     />
                   </div>
                   <div className="flex flex-col">
-                    <span className="font-serif-luxury text-sm font-bold tracking-[0.18em] text-[#1F1E1D] uppercase leading-tight group-hover:text-[#58111A] transition-colors">
+                    <span className="font-serif-luxury text-base font-bold tracking-[0.22em] text-[#1F1E1D] uppercase leading-tight group-hover:text-[#58111A] transition-colors">
                       SILK MODE
                     </span>
-                    <span className="text-[9px] tracking-[0.3em] text-[#7A726A] uppercase font-medium leading-tight">
+                    <span className="text-[10px] tracking-[0.35em] text-[#6A635B] uppercase font-semibold leading-tight mt-0.5">
                       FASHION
                     </span>
                   </div>
