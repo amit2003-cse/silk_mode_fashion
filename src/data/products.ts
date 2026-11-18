@@ -521,6 +521,33 @@ export const PRODUCTS_DATA: SareeProduct[] = [
     featured: true,
     inStock: true,
   },
+  {
+    id: "sm-tby-15",
+    slug: "soft-tabby-silk-floral-handprint-beads-work-saree",
+    name: "Soft Tabby Silk Floral Handprint Saree with Beads & Sequins Work",
+    category: "Organza & Tissue",
+    code: "SM-TBY-279",
+    price: 2799,
+    originalPrice: 5499,
+    badge: "FLORAL BEADS WORK",
+    description: "Exuding grace and sophistication, this floral-printed soft Tabby silk saree blends classic beauty with modern elegance. Each delicate petal features beautiful floral handprint motifs adorned with hand-embellished beads and sequins work, framed with a fine scalloped border. Paired with a contrast red Banglori silk blouse with heavy beads and sequins handwork.",
+    fabric: "Soft Tabby Silk (Organza Silk Texture)",
+    work: "Floral Handprint with Beads and Sequins Handwork & Scalloped Border",
+    sareeLength: "5.5 Meters Cut",
+    blouseDetails: "0.80 Meter Banglori Silk with Beads and Sequins Handwork (Contrast Red)",
+    weight: "0.650 kg",
+    images: [
+      "/images/products/tabby-silk-floral-model-stand.jpg",
+      "/images/products/tabby-silk-floral-model-seat.jpg",
+      "/images/products/tabby-silk-floral-flatlay.jpg",
+    ],
+    colors: [
+      { name: "Ivory White (Multicolor Floral)", hex: "#F8F5EE", imageIndex: 0 },
+    ],
+    trending: true,
+    featured: true,
+    inStock: true,
+  },
 ];
 
 /**
