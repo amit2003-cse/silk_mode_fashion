@@ -7,7 +7,7 @@ export const metadata: Metadata = {
   title: "Silk Mode Fashion | Premium Handcrafted Sarees & Ethnic Wear",
   description: "Explore the royal collection of Banarasi, Kanjivaram, Organza, and Designer Sarees woven in timeless tradition at Silk Mode Fashion.",
   icons: {
-    icon: "/images/logo.png",
+    icon: "/images/da66b080-7b45-45d1-bba8-14e0583018dc.png",
   },
 };
 

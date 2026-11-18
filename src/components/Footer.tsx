@@ -16,14 +16,24 @@ export default function Footer() {
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 pb-10 border-b border-[#701C29]">
           {/* Brand & Need Help Section (Matching screenshot 7) */}
           <div className="lg:col-span-6 space-y-4">
-            <div className="relative h-14 w-48 bg-[#FAF6F0] p-2 rounded-lg inline-block">
-              <Image
-                src="/images/logo.png"
-                alt="Silk Mode Fashion"
-                fill
-                className="object-contain object-left"
-              />
-            </div>
+            <Link href="/" className="inline-flex items-center space-x-3.5 group">
+              <div className="relative w-12 h-12 shrink-0">
+                <Image
+                  src="/images/da66b080-7b45-45d1-bba8-14e0583018dc.png"
+                  alt="Silk Mode Fashion"
+                  fill
+                  className="object-contain"
+                />
+              </div>
+              <div className="flex flex-col">
+                <span className="font-serif-luxury text-lg font-bold tracking-[0.2em] text-[#F3E5C8] uppercase leading-tight group-hover:text-white transition-colors">
+                  SILK MODE
+                </span>
+                <span className="text-[9.5px] tracking-[0.35em] text-[#D4AF37] uppercase font-semibold leading-tight mt-0.5">
+                  FASHION • SURAT
+                </span>
+              </div>
+            </Link>
 
             <h3 className="text-xl sm:text-2xl font-serif-luxury text-[#E0C788] pt-2">
               Need Help?

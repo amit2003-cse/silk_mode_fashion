@@ -67,18 +67,24 @@ export default function Header({ onSelectProduct }: HeaderProps) {
               </button>
             </div>
 
-            {/* Brand Logo - Dead center on Mobile & clean layout on Desktop */}
+            {/* Brand Logo - Vastrang style (Golden Emblem on top + Brand name below) */}
             <div className="lg:static absolute left-1/2 -translate-x-1/2 lg:translate-x-0 flex items-center justify-center z-10">
-              <Link href="/" className="flex items-center justify-center group">
-                <div className="relative h-13 md:h-16 w-40 md:w-52 overflow-hidden flex items-center justify-center">
+              <Link href="/" className="flex flex-col items-center justify-center group py-0.5">
+                <div className="relative w-9 h-9 sm:w-10 sm:h-10 md:w-10.5 md:h-10.5 transition-transform group-hover:scale-105 duration-200">
                   <Image
-                    src="/images/logo.png"
-                    alt="Silk Mode Fashion"
+                    src="/images/da66b080-7b45-45d1-bba8-14e0583018dc.png"
+                    alt="Silk Mode Fashion Logo"
                     fill
-                    className="object-contain object-center"
+                    className="object-contain"
                     priority
                   />
                 </div>
+                <span className="font-serif-luxury text-[11px] sm:text-[12px] md:text-[12.5px] font-bold tracking-[0.22em] text-[#1F1E1D] uppercase leading-tight mt-1 group-hover:text-[#58111A] transition-colors text-center">
+                  SILK MODE
+                </span>
+                <span className="text-[7.5px] sm:text-[8px] md:text-[8.5px] tracking-[0.35em] text-[#7A726A] uppercase font-medium leading-none -mt-0.5 text-center">
+                  FASHION
+                </span>
               </Link>
             </div>
 
@@ -237,14 +243,29 @@ export default function Header({ onSelectProduct }: HeaderProps) {
 
           <div className="fixed inset-y-0 left-0 w-4/5 max-w-sm bg-white border-r border-stone-200 shadow-2xl p-6 flex flex-col justify-between z-10">
             <div>
-              <div className="flex items-center justify-between pb-6 border-b border-stone-200">
-                <div className="relative h-12 w-36">
-                  <Image src="/images/logo.png" alt="Silk Mode Fashion" fill className="object-contain object-left" />
-                </div>
+              <div className="flex items-center justify-between pb-5 border-b border-stone-200">
+                <Link href="/" onClick={() => setMobileMenuOpen(false)} className="flex items-center space-x-3 group">
+                  <div className="relative w-10 h-10 shrink-0">
+                    <Image
+                      src="/images/da66b080-7b45-45d1-bba8-14e0583018dc.png"
+                      alt="Silk Mode Fashion"
+                      fill
+                      className="object-contain"
+                    />
+                  </div>
+                  <div className="flex flex-col">
+                    <span className="font-serif-luxury text-sm font-bold tracking-[0.18em] text-[#1F1E1D] uppercase leading-tight group-hover:text-[#58111A] transition-colors">
+                      SILK MODE
+                    </span>
+                    <span className="text-[9px] tracking-[0.3em] text-[#7A726A] uppercase font-medium leading-tight">
+                      FASHION
+                    </span>
+                  </div>
+                </Link>
                 <button
                   type="button"
                   onClick={() => setMobileMenuOpen(false)}
-                  className="p-2 text-stone-700"
+                  className="p-2 text-stone-700 hover:text-stone-900"
                   aria-label="Close menu"
                 >
                   <X className="w-6 h-6" />
