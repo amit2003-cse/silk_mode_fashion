@@ -70,8 +70,8 @@ export default function Footer() {
 
               <div className="flex items-center space-x-3">
                 <Mail className="w-4 h-4 text-[#D4AF37]" />
-                <a href="mailto:support@silkmodefashion.com" className="hover:text-[#D4AF37] transition">
-                  support@silkmodefashion.com
+                <a href="mailto:silkmodefashion06@gmail.com" className="hover:text-[#D4AF37] transition">
+                  silkmodefashion06@gmail.com
                 </a>
               </div>
             </div>
