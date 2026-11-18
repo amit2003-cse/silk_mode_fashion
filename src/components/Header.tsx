@@ -11,12 +11,33 @@ interface HeaderProps {
   onSelectProduct?: (product: SareeProduct) => void;
 }
 
+const POPULAR_SEARCHES = [
+  "Kanjivaram Silk",
+  "Banarasi Brocade",
+  "Bridal Lehenga",
+  "Organza Saree",
+  "Bandhani",
+];
+
 export default function Header({ onSelectProduct }: HeaderProps) {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [searchOpen, setSearchOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
   const [searchResults, setSearchResults] = useState<SareeProduct[]>([]);
+  const [isSearchFocused, setIsSearchFocused] = useState(false);
   const searchInputRef = useRef<HTMLInputElement>(null);
+  const searchContainerRef = useRef<HTMLDivElement>(null);
+
+  // Close desktop search dropdown on click outside
+  useEffect(() => {
+    function handleClickOutside(e: MouseEvent) {
+      if (searchContainerRef.current && !searchContainerRef.current.contains(e.target as Node)) {
+        setIsSearchFocused(false);
+      }
+    }
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, []);
 
   useEffect(() => {
     if (searchQuery.trim() === "") {
@@ -41,14 +62,14 @@ export default function Header({ onSelectProduct }: HeaderProps) {
     }
   }, [searchOpen]);
 
-  // Navigation links
+  // Concise navigation links tailored to fit cleanly without overlapping
   const navLinks = [
     { label: "Home", href: "/" },
-    { label: "All Products", href: "/collections" },
+    { label: "All Sarees", href: "/collections" },
     { label: "Silk Sarees", href: "/collections?category=Silk%20Saree" },
-    { label: "Salwar Suits & Kurtis", href: "/collections?category=Salwar%20Suit" },
+    { label: "Salwar Suits", href: "/collections?category=Salwar%20Suit" },
     { label: "Space Silk", href: "/collections?category=Space%20Silk" },
-    { label: "Bandhani & Garchola", href: "/collections?category=Bandhani%20Silk" },
+    { label: "Bandhani", href: "/collections?category=Bandhani%20Silk" },
     { label: "Party Wear", href: "/collections?category=Party%20Wear" },
     { label: "Best Sellers", href: "/#bestsellers" },
   ];
@@ -57,7 +78,7 @@ export default function Header({ onSelectProduct }: HeaderProps) {
     <>
       <header className="sticky top-0 z-40 bg-white border-b border-stone-200 shadow-2xs transition-all">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex items-center justify-between min-h-[84px] lg:min-h-[94px] py-1.5 lg:py-2">
+          <div className="flex items-center justify-between gap-2 lg:gap-3 xl:gap-6 min-h-[84px] lg:min-h-[94px] py-1.5 lg:py-2">
             {/* Mobile Menu Button (Left on mobile) */}
             <div className="flex items-center lg:hidden">
               <button
@@ -91,13 +112,13 @@ export default function Header({ onSelectProduct }: HeaderProps) {
               </Link>
             </div>
 
-            {/* Desktop Navigation Links */}
-            <nav className="hidden lg:flex items-center space-x-3 xl:space-x-5.5 min-w-0">
+            {/* Desktop Navigation Links (Cleanly spaced without overlap) */}
+            <nav className="hidden lg:flex items-center gap-x-2.5 xl:gap-x-4 2xl:gap-x-5.5 shrink min-w-0">
               {navLinks.map((link) => (
                 <Link
                   key={link.label}
                   href={link.href}
-                  className="text-[13px] xl:text-sm font-medium tracking-normal text-stone-800 hover:text-[#58111A] relative py-1 transition-colors whitespace-nowrap"
+                  className="text-[12.5px] xl:text-[13.5px] font-medium tracking-normal text-stone-800 hover:text-[#58111A] relative py-1 transition-colors whitespace-nowrap"
                 >
                   {link.label}
                 </Link>
@@ -105,54 +126,108 @@ export default function Header({ onSelectProduct }: HeaderProps) {
             </nav>
 
             {/* Actions: Search Input & WhatsApp Header Contact */}
-            <div className="flex items-center space-x-2.5 xl:space-x-3 shrink-0">
-              {/* Desktop Search Input (Exact Vastrang Style: "I'm looking for...") */}
-              <div className="relative hidden md:block w-44 lg:w-48 xl:w-60">
+            <div className="flex items-center space-x-2 lg:space-x-2.5 xl:space-x-3 shrink-0">
+              {/* Desktop Search Input (Solid luxury pill with expand & dropdown) */}
+              <div
+                ref={searchContainerRef}
+                className="relative hidden md:block w-36 lg:w-44 xl:w-56 focus-within:w-48 lg:focus-within:w-56 xl:focus-within:w-64 transition-all duration-200 z-30"
+              >
                 <div className="relative flex items-center">
-                  <Search className="w-4 h-4 text-stone-400 absolute left-3.5 pointer-events-none" />
+                  <Search className="w-3.5 h-3.5 text-stone-400 absolute left-3 pointer-events-none" />
                   <input
                     type="text"
                     value={searchQuery}
-                    onChange={(e) => setSearchQuery(e.target.value)}
-                    placeholder="I'm looking for..."
-                    className="w-full bg-stone-100/80 text-stone-900 placeholder-stone-400 text-sm pl-10 pr-4 py-2 rounded-full border border-stone-200 focus:outline-none focus:border-[#58111A] focus:bg-white transition"
+                    onFocus={() => setIsSearchFocused(true)}
+                    onChange={(e) => {
+                      setSearchQuery(e.target.value);
+                      setIsSearchFocused(true);
+                    }}
+                    placeholder="Search sarees, silks..."
+                    className="w-full bg-[#F6F5F2] hover:bg-[#F0EEEA] focus:bg-white text-stone-900 placeholder:text-stone-400 text-xs xl:text-[13px] pl-8.5 pr-7 py-2 rounded-full border border-stone-200/90 focus:outline-none focus:border-[#58111A] focus:ring-2 focus:ring-[#58111A]/10 shadow-2xs transition"
                   />
                   {searchQuery && (
                     <button
+                      type="button"
                       onClick={() => setSearchQuery("")}
-                      className="absolute right-3 text-xs text-stone-400 hover:text-stone-700"
+                      className="absolute right-2.5 w-4 h-4 rounded-full bg-stone-200 hover:bg-stone-300 text-stone-600 text-[10px] flex items-center justify-center transition"
                     >
                       ✕
                     </button>
                   )}
                 </div>
 
-                {/* Dropdown search results */}
-                {searchResults.length > 0 && (
-                  <div className="absolute top-full mt-2 w-80 right-0 bg-white border border-stone-200 rounded-xl shadow-xl z-50 overflow-hidden max-h-96 overflow-y-auto">
-                    <div className="p-2 border-b border-stone-100 text-xs font-semibold text-stone-400 uppercase tracking-wider">
-                      Matching Products ({searchResults.length})
+                {/* Dropdown: Popular Searches (When empty & focused) */}
+                {isSearchFocused && searchQuery.trim() === "" && (
+                  <div className="absolute top-full mt-2 w-72 right-0 bg-white border border-stone-200/90 rounded-2xl shadow-xl z-50 p-3.5">
+                    <p className="text-[11px] font-semibold text-stone-400 uppercase tracking-wider mb-2">
+                      Popular Searches
+                    </p>
+                    <div className="flex flex-wrap gap-1.5">
+                      {POPULAR_SEARCHES.map((item) => (
+                        <button
+                          key={item}
+                          type="button"
+                          onClick={() => {
+                            setSearchQuery(item);
+                            setIsSearchFocused(true);
+                          }}
+                          className="px-2.5 py-1 text-xs bg-stone-100 hover:bg-[#58111A] hover:text-white text-stone-700 rounded-full transition cursor-pointer"
+                        >
+                          {item}
+                        </button>
+                      ))}
                     </div>
-                    {searchResults.map((product) => (
+                  </div>
+                )}
+
+                {/* Dropdown: Live Search Results */}
+                {isSearchFocused && searchQuery.trim() !== "" && (
+                  <div className="absolute top-full mt-2 w-80 right-0 bg-white border border-stone-200/90 rounded-2xl shadow-xl z-50 overflow-hidden max-h-96 overflow-y-auto">
+                    <div className="p-2.5 bg-stone-50/80 border-b border-stone-100 flex items-center justify-between text-xs font-semibold text-stone-600">
+                      <span>Matching Products ({searchResults.length})</span>
                       <Link
-                        key={product.id}
-                        href={`/products/${product.slug}`}
+                        href={`/collections?q=${encodeURIComponent(searchQuery)}`}
                         onClick={() => {
-                          onSelectProduct?.(product);
+                          setIsSearchFocused(false);
                           setSearchQuery("");
                         }}
-                        className="flex items-center p-3 hover:bg-stone-50 cursor-pointer transition space-x-3 border-b border-stone-100 last:border-b-0"
+                        className="text-[#58111A] hover:underline text-[11px]"
                       >
-                        <div className="relative w-12 h-14 rounded overflow-hidden flex-shrink-0 bg-stone-100">
-                          <Image src={product.images[0]} alt={product.name} fill className="object-cover" />
-                        </div>
-                        <div className="flex-1 min-w-0">
-                          <p className="text-xs font-semibold text-stone-900 truncate">{product.name}</p>
-                          <p className="text-xs text-stone-500">{product.category}</p>
-                          <p className="text-xs font-bold text-[#58111A] mt-0.5">₹{product.price.toLocaleString("en-IN")}</p>
-                        </div>
+                        View in Shop →
                       </Link>
-                    ))}
+                    </div>
+
+                    {searchResults.length > 0 ? (
+                      searchResults.slice(0, 6).map((product) => (
+                        <Link
+                          key={product.id}
+                          href={`/products/${product.slug}`}
+                          onClick={() => {
+                            onSelectProduct?.(product);
+                            setSearchQuery("");
+                            setIsSearchFocused(false);
+                          }}
+                          className="flex items-center p-2.5 hover:bg-stone-50 cursor-pointer transition space-x-3 border-b border-stone-100 last:border-b-0 group"
+                        >
+                          <div className="relative w-11 h-13 rounded-md overflow-hidden flex-shrink-0 bg-stone-100">
+                            <Image src={product.images[0]} alt={product.name} fill className="object-cover group-hover:scale-105 transition-transform duration-200" />
+                          </div>
+                          <div className="flex-1 min-w-0">
+                            <p className="text-xs font-semibold text-stone-900 truncate group-hover:text-[#58111A] transition-colors">
+                              {product.name}
+                            </p>
+                            <p className="text-[11px] text-stone-500">{product.category}</p>
+                            <p className="text-xs font-bold text-[#58111A] mt-0.5">₹{product.price.toLocaleString("en-IN")}</p>
+                          </div>
+                          <ArrowRight className="w-3.5 h-3.5 text-stone-300 group-hover:text-[#58111A] group-hover:translate-x-0.5 transition" />
+                        </Link>
+                      ))
+                    ) : (
+                      <div className="p-4 text-center">
+                        <p className="text-xs text-stone-500">No sarees found for &quot;{searchQuery}&quot;</p>
+                        <p className="text-[11px] text-stone-400 mt-1">Try searching for &quot;Silk&quot;, &quot;Banarasi&quot;, or &quot;Lehenga&quot;</p>
+                      </div>
+                    )}
                   </div>
                 )}
               </div>
@@ -172,10 +247,11 @@ export default function Header({ onSelectProduct }: HeaderProps) {
                 href={getGeneralWhatsAppUrl()}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="hidden sm:inline-flex items-center space-x-1.5 bg-[#58111A] hover:bg-[#460D1B] text-white px-4 py-2 rounded-full text-xs font-medium tracking-wide transition shadow-2xs"
+                className="hidden sm:inline-flex items-center space-x-1.5 bg-[#58111A] hover:bg-[#460D1B] text-white px-3.5 lg:px-4 py-2 rounded-full text-xs font-medium tracking-wide transition shadow-2xs shrink-0"
               >
                 <MessageCircle className="w-3.5 h-3.5 text-[#25D366]" />
-                <span>Enquire</span>
+                <span className="hidden xl:inline">Enquire</span>
+                <span className="xl:hidden">Chat</span>
               </a>
             </div>
           </div>
@@ -190,11 +266,12 @@ export default function Header({ onSelectProduct }: HeaderProps) {
                   type="text"
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
-                  placeholder="I'm looking for sarees, silk..."
+                  placeholder="Search sarees, silk, lehenga..."
                   /* Note: text-base prevents iOS Safari zoom */
-                  className="w-full bg-stone-100 text-stone-900 placeholder-stone-400 text-base pl-10 pr-10 py-2.5 rounded-full border border-stone-200 focus:outline-none focus:border-[#58111A] focus:bg-white"
+                  className="w-full bg-[#F6F5F2] text-stone-900 placeholder-stone-400 text-sm pl-10 pr-10 py-2.5 rounded-full border border-stone-200 focus:outline-none focus:border-[#58111A] focus:bg-white"
                 />
                 <button
+                  type="button"
                   onClick={() => {
                     setSearchOpen(false);
                     setSearchQuery("");
@@ -205,30 +282,70 @@ export default function Header({ onSelectProduct }: HeaderProps) {
                 </button>
               </div>
 
+              {/* Mobile Quick Tags when empty */}
+              {searchQuery.trim() === "" && (
+                <div className="mt-2.5 px-1">
+                  <p className="text-[11px] font-semibold text-stone-400 uppercase tracking-wider mb-1.5">
+                    Popular:
+                  </p>
+                  <div className="flex flex-wrap gap-1.5">
+                    {POPULAR_SEARCHES.map((item) => (
+                      <button
+                        key={item}
+                        type="button"
+                        onClick={() => setSearchQuery(item)}
+                        className="px-2.5 py-1 text-xs bg-stone-100 hover:bg-[#58111A] hover:text-white text-stone-700 rounded-full transition"
+                      >
+                        {item}
+                      </button>
+                    ))}
+                  </div>
+                </div>
+              )}
+
               {/* Mobile Search Results */}
-              {searchResults.length > 0 && (
-                <div className="mt-2 bg-white border border-stone-200 rounded-xl shadow-lg max-h-72 overflow-y-auto">
-                  {searchResults.map((product) => (
+              {searchQuery.trim() !== "" && (
+                <div className="mt-2 bg-white border border-stone-200/90 rounded-xl shadow-lg max-h-72 overflow-y-auto">
+                  <div className="p-2 bg-stone-50 border-b border-stone-100 flex items-center justify-between text-xs font-semibold text-stone-600">
+                    <span>Found ({searchResults.length})</span>
                     <Link
-                      key={product.id}
-                      href={`/products/${product.slug}`}
+                      href={`/collections?q=${encodeURIComponent(searchQuery)}`}
                       onClick={() => {
-                        onSelectProduct?.(product);
                         setSearchOpen(false);
                         setSearchQuery("");
                       }}
-                      className="flex items-center p-3 border-b border-stone-100 hover:bg-stone-50 space-x-3 cursor-pointer"
+                      className="text-[#58111A] hover:underline text-[11px]"
                     >
-                      <div className="relative w-12 h-14 rounded overflow-hidden flex-shrink-0 bg-stone-100">
-                        <Image src={product.images[0]} alt={product.name} fill className="object-cover" />
-                      </div>
-                      <div className="flex-1 min-w-0">
-                        <p className="text-xs font-semibold text-stone-900 truncate">{product.name}</p>
-                        <p className="text-xs text-stone-500">{product.category}</p>
-                        <p className="text-xs font-bold text-[#58111A] mt-0.5">₹{product.price.toLocaleString("en-IN")}</p>
-                      </div>
+                      View in Shop →
                     </Link>
-                  ))}
+                  </div>
+                  {searchResults.length > 0 ? (
+                    searchResults.map((product) => (
+                      <Link
+                        key={product.id}
+                        href={`/products/${product.slug}`}
+                        onClick={() => {
+                          onSelectProduct?.(product);
+                          setSearchOpen(false);
+                          setSearchQuery("");
+                        }}
+                        className="flex items-center p-3 border-b border-stone-100 hover:bg-stone-50 space-x-3 cursor-pointer"
+                      >
+                        <div className="relative w-12 h-14 rounded overflow-hidden flex-shrink-0 bg-stone-100">
+                          <Image src={product.images[0]} alt={product.name} fill className="object-cover" />
+                        </div>
+                        <div className="flex-1 min-w-0">
+                          <p className="text-xs font-semibold text-stone-900 truncate">{product.name}</p>
+                          <p className="text-xs text-stone-500">{product.category}</p>
+                          <p className="text-xs font-bold text-[#58111A] mt-0.5">₹{product.price.toLocaleString("en-IN")}</p>
+                        </div>
+                      </Link>
+                    ))
+                  ) : (
+                    <div className="p-4 text-center">
+                      <p className="text-xs text-stone-500">No sarees found for &quot;{searchQuery}&quot;</p>
+                    </div>
+                  )}
                 </div>
               )}
             </div>
