@@ -10,12 +10,13 @@ export default function BrandStory() {
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-16 items-center">
           {/* Brand Visual Collage */}
           <div className="relative">
-            <div className="relative aspect-[4/3] rounded-2xl overflow-hidden shadow-lg border-2 border-[#E8DEC8]">
+            <div className="relative aspect-[4/3] rounded-2xl overflow-hidden shadow-xl border-2 border-[#E8DEC8] bg-stone-100">
               <Image
-                src="https://images.unsplash.com/photo-1610030469983-98e550d6193c?auto=format&fit=crop&w=1200&q=80"
+                src="/images/products/kanjivaram-zari-tissue-1.jpg"
                 alt="Silk Mode Fashion Artisan Heritage"
                 fill
-                className="object-cover"
+                className="object-cover object-top hover:scale-105 transition-transform duration-700"
+                priority
               />
             </div>
             {/* Floating Emblem */}
