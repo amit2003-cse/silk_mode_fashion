@@ -46,10 +46,10 @@ export default function HomePage() {
       {/* 3. Auto-Swapping 2-Slide Hero Carousel with Next/Prev Arrows */}
       <HeroBanner />
 
-      {/* 4. Shop by Collection (Temporarily hidden on request) */}
-      {/* <ShopByCollection onSelectCategory={handleSelectCategory} /> */}
+      {/* 4. Shop by Category & Collection */}
+      <ShopByCollection onSelectCategory={handleSelectCategory} />
 
-      {/* 5. Trending Collection (4 columns desktop, 2 columns mobile) */}
+      {/* 5. Trending Collection (Curated Top Picks + View All) */}
       <TrendingCollection onQuickView={handleQuickView} />
 
       {/* 6. "Our customers love us" - 2 Rows of Moving Review Cards */}

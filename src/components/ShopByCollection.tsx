@@ -11,49 +11,63 @@ interface ShopByCollectionProps {
 
 export default function ShopByCollection({ onSelectCategory }: ShopByCollectionProps) {
   return (
-    <section id="collections" className="py-14 sm:py-20 bg-white border-b border-stone-200">
+    <section id="categories" className="py-12 sm:py-18 bg-white border-b border-stone-200">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        {/* Section Header (Vastrang Style) */}
-        <div className="text-center max-w-2xl mx-auto mb-10 sm:mb-14">
-          <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-stone-900 tracking-tight">
-            Shop by Collection
+        {/* Section Header */}
+        <div className="text-center max-w-2xl mx-auto mb-8 sm:mb-12">
+          <span className="text-xs font-bold uppercase tracking-widest text-[#58111A]">
+            Curated Weaves
+          </span>
+          <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-stone-900 tracking-tight mt-1">
+            Shop by Category
           </h2>
-          <p className="mt-2 text-sm sm:text-base text-stone-500 font-normal">
-            Discover designer sarees for every occasion.
+          <p className="mt-2 text-xs sm:text-sm text-stone-500 font-normal">
+            Explore authentic Surat sarees, designer salwar suits & bridal collections.
           </p>
         </div>
 
         {/* Circular Collection Cards Grid:
             Desktop: 6 in a single balanced row
-            Mobile: 3 columns x 2 rows (Exact vastrang layout)
+            Mobile: 3 columns x 2 rows (Exact Vastrang layout)
         */}
-        <div className="grid grid-cols-3 sm:grid-cols-3 md:grid-cols-6 gap-4 sm:gap-6 lg:gap-8 justify-items-center">
-          {COLLECTIONS_DATA.map((item: CollectionItem) => (
-            <Link
-              key={item.id}
-              href="/collections"
-              onClick={() => onSelectCategory?.(item.name)}
-              className="group flex flex-col items-center text-center cursor-pointer w-full max-w-[160px]"
-            >
-              {/* Circular Image Container (Slightly larger, matching Vastrang) */}
-              <div className="relative w-24 h-24 sm:w-32 sm:h-32 md:w-36 md:h-36 lg:w-40 lg:h-40 rounded-full overflow-hidden p-1 border-2 border-stone-200 group-hover:border-[#58111A] transition-all duration-300 shadow-xs group-hover:shadow-md group-hover:scale-105 bg-stone-100">
-                <div className="relative w-full h-full rounded-full overflow-hidden">
-                  <Image
-                    src={item.image}
-                    alt={item.name}
-                    fill
-                    sizes="(max-width: 640px) 96px, (max-width: 768px) 128px, 160px"
-                    className="object-cover object-center group-hover:scale-110 transition-transform duration-500"
-                  />
-                </div>
-              </div>
+        <div className="grid grid-cols-3 sm:grid-cols-3 md:grid-cols-6 gap-3 sm:gap-6 lg:gap-7 justify-items-center">
+          {COLLECTIONS_DATA.map((item: CollectionItem) => {
+            const targetUrl = item.categoryFilter
+              ? `/collections?category=${encodeURIComponent(item.categoryFilter)}`
+              : "/collections";
 
-              {/* Title below circle */}
-              <h3 className="mt-3.5 text-xs sm:text-sm font-semibold text-stone-900 group-hover:text-[#58111A] transition-colors leading-tight">
-                {item.name}
-              </h3>
-            </Link>
-          ))}
+            return (
+              <Link
+                key={item.id}
+                href={targetUrl}
+                onClick={() => onSelectCategory?.(item.categoryFilter || item.name)}
+                className="group flex flex-col items-center text-center cursor-pointer w-full max-w-[150px]"
+              >
+                {/* Circular Image Container */}
+                <div className="relative w-22 h-22 sm:w-28 sm:h-28 md:w-32 md:h-32 lg:w-36 lg:h-36 rounded-full overflow-hidden p-1 border-2 border-stone-200 group-hover:border-[#58111A] transition-all duration-300 shadow-2xs group-hover:shadow-md group-hover:scale-105 bg-stone-50">
+                  <div className="relative w-full h-full rounded-full overflow-hidden">
+                    <Image
+                      src={item.image}
+                      alt={item.name}
+                      fill
+                      sizes="(max-width: 640px) 88px, (max-width: 768px) 120px, 150px"
+                      className="object-cover object-center group-hover:scale-110 transition-transform duration-500"
+                    />
+                  </div>
+                </div>
+
+                {/* Title below circle */}
+                <h3 className="mt-2.5 sm:mt-3 text-[11px] sm:text-xs md:text-sm font-semibold text-stone-900 group-hover:text-[#58111A] transition-colors leading-tight">
+                  {item.name}
+                </h3>
+                {item.count && (
+                  <span className="text-[10px] text-stone-400 font-medium hidden sm:block mt-0.5">
+                    {item.count}
+                  </span>
+                )}
+              </Link>
+            );
+          })}
         </div>
       </div>
     </section>
