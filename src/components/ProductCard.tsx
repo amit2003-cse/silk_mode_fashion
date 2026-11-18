@@ -62,14 +62,7 @@ export default function ProductCard({ product, onQuickView }: ProductCardProps) 
           className="object-cover object-center group-hover:scale-105 transition-transform duration-500"
         />
 
-        {/* Promo Badge on top-left (e.g. BUY 2 GET 1 FREE) */}
-        {product.badge && (
-          <div className="absolute top-2 left-2 z-10 pointer-events-none">
-            <span className="inline-block bg-[#D32F2F] text-white text-[9px] font-bold px-1.5 py-0.5 rounded-xs shadow-xs tracking-tight uppercase max-w-[85px] sm:max-w-none truncate leading-tight">
-              {product.badge}
-            </span>
-          </div>
-        )}
+
 
         {/* Desktop Quick "View Details" Overlay Button */}
         <div className="hidden sm:block absolute inset-x-3 bottom-3 opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-10 pointer-events-none">

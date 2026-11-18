@@ -1,6 +1,5 @@
 import type { Metadata, Viewport } from "next";
 import "./globals.css";
-import FloatingWhatsApp from "@/components/FloatingWhatsApp";
 import MobileBottomNav from "@/components/MobileBottomNav";
 
 export const metadata: Metadata = {
@@ -35,7 +34,6 @@ export default function RootLayout({
       </head>
       <body className="antialiased min-h-screen flex flex-col pb-16 md:pb-0">
         {children}
-        <FloatingWhatsApp />
         <MobileBottomNav />
       </body>
     </html>

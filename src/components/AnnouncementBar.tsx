@@ -3,7 +3,7 @@ import React from "react";
 
 export default function AnnouncementBar() {
   const announcements = [
-    "Special Offer: Buy 2 Get 1 FREE 🎁 on Exclusive Handloom Sarees",
+    "Direct Surat Manufacturer Price • Pure Handloom & Designer Sarees",
     "Direct Artisan Weaves & 100% Pure Fabrics",
     "Fast All India Delivery & Dedicated WhatsApp Support",
     "Discover Our Royal Banarasi & Kanjivaram Collection",

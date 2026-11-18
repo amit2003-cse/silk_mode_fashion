@@ -44,9 +44,12 @@ export default function Header({ onSelectProduct }: HeaderProps) {
   // Navigation links
   const navLinks = [
     { label: "Home", href: "/" },
-    { label: "All Sarees", href: "/collections" },
-    { label: "Clearance Sale", href: "/collections" },
-    { label: "Collections", href: "/collections" },
+    { label: "All Products", href: "/collections" },
+    { label: "Silk Sarees", href: "/collections?category=Silk%20Saree" },
+    { label: "Salwar Suits & Kurtis", href: "/collections?category=Salwar%20Suit" },
+    { label: "Space Silk", href: "/collections?category=Space%20Silk" },
+    { label: "Bandhani & Garchola", href: "/collections?category=Bandhani%20Silk" },
+    { label: "Party Wear", href: "/collections?category=Party%20Wear" },
     { label: "Best Sellers", href: "/#bestsellers" },
   ];
 

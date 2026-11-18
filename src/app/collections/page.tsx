@@ -1,8 +1,9 @@
 "use client";
 
-import React, { useState, useMemo } from "react";
+import React, { useState, useMemo, useEffect, Suspense } from "react";
 import Image from "next/image";
 import Link from "next/link";
+import { useSearchParams } from "next/navigation";
 import { Filter, ChevronDown, LayoutGrid, List, X, Check, MessageCircle, ArrowLeft } from "lucide-react";
 import AnnouncementBar from "@/components/AnnouncementBar";
 import Header from "@/components/Header";
@@ -15,7 +16,8 @@ import { getGeneralWhatsAppUrl } from "@/lib/whatsapp";
 type SortOption = "featured" | "price-asc" | "price-desc" | "name-asc";
 type ViewMode = "grid" | "list";
 
-export default function CollectionsPage() {
+function CollectionsContent() {
+  const searchParams = useSearchParams();
   const [selectedProduct, setSelectedProduct] = useState<SareeProduct | null>(null);
   
   // Applied filters (active on the page)
@@ -33,6 +35,18 @@ export default function CollectionsPage() {
 
   // Available categories
   const categories = ["All", ...Array.from(new Set(PRODUCTS_DATA.map((p) => p.category)))];
+
+  // Auto-sync category from URL query parameters (e.g. ?category=Salwar%20Suit)
+  useEffect(() => {
+    const cat = searchParams.get("category");
+    if (cat && categories.includes(cat)) {
+      setSelectedCategory(cat);
+      setDraftCategory(cat);
+    } else if (!cat) {
+      setSelectedCategory("All");
+      setDraftCategory("All");
+    }
+  }, [searchParams]);
 
   // Open drawer and sync draft with currently applied filter
   const openFilterDrawer = () => {
@@ -123,27 +137,27 @@ export default function CollectionsPage() {
           <span className="text-stone-900 font-medium truncate">All Sarees & Collections</span>
         </div>
 
-        {/* Top Promo Banner (Matching Vastrang Screenshot 2) */}
-        <div className="relative w-full rounded-xl overflow-hidden bg-gradient-to-r from-[#6B3E39] via-[#85453E] to-[#6B3E39] p-3.5 sm:p-6 text-white shadow-xs mb-4 sm:mb-6 flex flex-col sm:flex-row items-center justify-between text-center sm:text-left">
+        {/* Top Collection Banner */}
+        <div className="relative w-full rounded-xl overflow-hidden bg-gradient-to-r from-[#58111A] via-[#752430] to-[#58111A] p-3.5 sm:p-6 text-white shadow-xs mb-4 sm:mb-6 flex flex-col sm:flex-row items-center justify-between text-center sm:text-left">
           <div className="mb-2.5 sm:mb-0">
             <span className="inline-block bg-[#E5A93C] text-stone-950 text-[10px] font-bold px-2 py-0.5 rounded tracking-wider uppercase mb-1">
-              Festive Offer
+              Surat Textile Hub
             </span>
             <h1 className="text-lg sm:text-2xl font-bold tracking-tight">
-              BUY 2 GET 1 FREE 🎁
+              AUTHENTIC HANDLOOM & LUXURY WEAVES 🪡
             </h1>
             <p className="text-[11px] sm:text-xs text-stone-200 mt-0.5">
-              Applicable on all handloom sarees & prepaid orders
+              Direct from Surat manufacturer with zero retail markup • Free all-India delivery
             </p>
           </div>
           <a
-            href={getGeneralWhatsAppUrl("Hello Silk Mode Fashion, I would like to enquire about the Buy 2 Get 1 Free festive offer on sarees.")}
+            href={getGeneralWhatsAppUrl("Hello Silk Mode Fashion, I would like to enquire about your handcrafted sarees and suits collection.")}
             target="_blank"
             rel="noopener noreferrer"
             className="inline-flex items-center space-x-1.5 px-3.5 py-2 bg-white text-[#58111A] hover:bg-stone-100 rounded-full text-xs font-bold transition shadow-xs shrink-0"
           >
             <MessageCircle className="w-3.5 h-3.5 text-[#25D366]" />
-            <span>Claim Offer on WhatsApp</span>
+            <span>Enquire on WhatsApp</span>
           </a>
         </div>
 
@@ -436,5 +450,13 @@ export default function CollectionsPage() {
       {/* Footer */}
       <Footer />
     </div>
+  );
+}
+
+export default function CollectionsPage() {
+  return (
+    <Suspense fallback={<div className="min-h-screen bg-white" />}>
+      <CollectionsContent />
+    </Suspense>
   );
 }

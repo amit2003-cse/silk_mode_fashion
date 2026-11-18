@@ -102,7 +102,7 @@ export const PRODUCTS_DATA: SareeProduct[] = [
     code: "SM-KHD-199",
     price: 1999,
     originalPrice: 3999,
-    badge: "BUY 2 GET 1 FREE",
+    badge: "Bestseller",
     description: "Premium Soft Khadi raw silk saree which gives pure touch by its raw smoothness with rich multicolour zari weaving floral pallu & fine zari weaving border with all over weaving floral butties and fancy tassels with running blouse piece.",
     fabric: "Premium Soft Khadi Raw Silk (Pure Handloom Touch)",
     work: "Multicolour Zari Weaving Floral Pallu, Fine Zari Border & All-over Floral Butties with Fancy Tassels",

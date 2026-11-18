@@ -279,14 +279,7 @@ export default function ProductDetailClient({
                 </>
               )}
 
-              {/* Promo Badge on top-left */}
-              {product.badge && (
-                <div className="absolute top-4 left-4 z-10">
-                  <span className="inline-block bg-[#D32F2F] text-white text-xs font-bold px-3 py-1 rounded-sm shadow-md tracking-wider uppercase">
-                    {product.badge}
-                  </span>
-                </div>
-              )}
+
 
               {/* Floating Action Buttons on top-right */}
               <div className="absolute top-4 right-4 z-10 flex flex-col space-y-2">
@@ -424,7 +417,7 @@ export default function ProductDetailClient({
                 <div className="text-xs">
                   <h4 className="font-bold text-[#58111A]">Special Festive Celebration Offer</h4>
                   <p className="text-stone-700 mt-0.5">
-                    <strong>BUY 2 GET 1 FREE:</strong> Add any 3 sarees to your cart or inquiry and pay for only 2! Applicable on WhatsApp prepaid orders.
+                    <strong>Direct Surat Wholesale Pricing:</strong> Authentic artisan handloom & designer weaves at genuine Surat manufacturer rates with zero middleman markup.
                   </p>
                 </div>
               </div>
