@@ -12,7 +12,6 @@ import PromotionalBanner from "@/components/PromotionalBanner";
 import BestSellers from "@/components/BestSellers";
 import WhyChooseUs from "@/components/WhyChooseUs";
 import BrandStory from "@/components/BrandStory";
-import InstagramSection from "@/components/InstagramSection";
 import Footer from "@/components/Footer";
 import ProductQuickViewModal from "@/components/ProductQuickViewModal";
 import { SareeProduct } from "@/data/products";
@@ -70,10 +69,7 @@ export default function HomePage() {
       {/* 11. Silk Mode Fashion Brand Heritage Story */}
       <BrandStory />
 
-      {/* 12. Follow Us on Instagram (12-Image Rich Lookbook Grid) */}
-      <InstagramSection />
-
-      {/* 13. Luxury Wine/Maroon Footer with Contact +91 7359345438 */}
+      {/* 12. Luxury Wine/Maroon Footer with Contact +91 7359345438 */}
       <Footer />
 
       {/* Interactive Saree Quick View Modal */}
