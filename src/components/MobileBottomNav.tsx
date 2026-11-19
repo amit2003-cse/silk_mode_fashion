@@ -7,7 +7,7 @@ import { Home, ShoppingBag, LayoutGrid, MessageCircle, X, ChevronRight, Sparkles
 import { getGeneralWhatsAppUrl } from "@/lib/whatsapp";
 
 const CATEGORIES_LIST = [
-  { name: "All Products", href: "/collections", count: "51 Items", icon: "✨" },
+  { name: "All Products", href: "/collections", count: "All Weaves", icon: "✨" },
   { name: "Silk Sarees", href: "/collections?category=Silk%20Saree", count: "Banarasi, Paithani, Khadi", icon: "🥻" },
   { name: "Salwar Suits & Kurtis", href: "/collections?category=Salwar%20Suit", count: "Muslin, Chanderi, Rayon", icon: "👗" },
   { name: "Space Silk Sarees", href: "/collections?category=Space%20Silk", count: "Zari, Jarkhan & Beads", icon: "🌟" },
