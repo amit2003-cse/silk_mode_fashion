@@ -94,7 +94,7 @@ export default function Header({ onSelectProduct }: HeaderProps) {
             {/* Brand Logo - Vastrang style (Golden Emblem on top + Brand name below) */}
             <div className="lg:static absolute left-1/2 -translate-x-1/2 lg:translate-x-0 flex items-center justify-center z-10 shrink-0">
               <Link href="/" className="flex flex-col items-center justify-center group py-0.5 shrink-0">
-                <div className="relative w-9.5 h-9.5 sm:w-10 sm:h-10 lg:w-11 lg:h-11 transition-transform group-hover:scale-105 duration-200">
+                <div className="relative w-10 h-10 sm:w-11 sm:h-11 lg:w-11.5 lg:h-11.5 transition-transform group-hover:scale-105 duration-200">
                   <Image
                     src="/images/da66b080-7b45-45d1-bba8-14e0583018dc.png"
                     alt="Silk Mode Fashion Logo"
@@ -103,10 +103,10 @@ export default function Header({ onSelectProduct }: HeaderProps) {
                     priority
                   />
                 </div>
-                <span className="font-serif-luxury text-[13px] sm:text-[14px] lg:text-[14.5px] font-bold tracking-[0.22em] text-[#1F1E1D] uppercase leading-none mt-1.5 group-hover:text-[#58111A] transition-colors text-center whitespace-nowrap">
+                <span className="font-serif-luxury text-[15.5px] sm:text-[16.5px] lg:text-[16px] font-extrabold tracking-[0.22em] text-[#1F1E1D] uppercase leading-none mt-1.5 group-hover:text-[#58111A] transition-colors text-center whitespace-nowrap">
                   SILK MODE
                 </span>
-                <span className="text-[8px] sm:text-[8.5px] lg:text-[9px] tracking-[0.36em] text-[#6A635B] uppercase font-semibold leading-none mt-1 text-center whitespace-nowrap">
+                <span className="text-[10px] sm:text-[10.5px] lg:text-[10.5px] tracking-[0.38em] text-[#554E46] uppercase font-bold leading-none mt-1 text-center whitespace-nowrap">
                   FASHION
                 </span>
               </Link>

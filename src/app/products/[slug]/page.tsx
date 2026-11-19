@@ -4,9 +4,16 @@ import { getProductBySlug, getRelatedProducts, PRODUCTS_DATA } from "@/data/prod
 import ProductDetailClient from "./ProductDetailClient";
 
 export async function generateStaticParams() {
-  return PRODUCTS_DATA.map((product) => ({
-    slug: product.slug,
-  }));
+  const params: { slug: string }[] = [];
+  PRODUCTS_DATA.forEach((product) => {
+    params.push({ slug: product.slug });
+    if (product.aliases) {
+      product.aliases.forEach((alias) => {
+        params.push({ slug: alias });
+      });
+    }
+  });
+  return params;
 }
 
 export async function generateMetadata({
