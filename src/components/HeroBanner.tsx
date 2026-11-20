@@ -14,18 +14,20 @@ interface HeroSlide {
   ctaText: string;
   ctaLink: string;
   desktopImage: string;
+  imageAlt: string;
 }
 
 const HERO_SLIDES: HeroSlide[] = [
   {
     id: 1,
-    tagline: "ROYAL BRIDAL & WEDDING EDITS",
-    title: "Designed Kanjivaram",
-    titleHighlight: "Zari Tissue",
-    subtitle: "Rich zari tissue texture, hand embroidery & elegant tube beads work. (Weight: 1.600 kg)",
-    ctaText: "VIEW SAREE • ₹7,500",
-    ctaLink: "/products/designed-kanjivaram-zari-tissue-embroidery-saree",
+    tagline: "DIRECT FROM SURAT WEAVERS",
+    title: "SilkMode Fashion",
+    titleHighlight: "Surat Sarees & Lehengas",
+    subtitle: "Authentic Surat handlooms, royal bridal couture, and pure Kanjivaram zari tissue weaves crafted by master artisans at direct manufacturer prices.",
+    ctaText: "EXPLORE COLLECTION",
+    ctaLink: "/collections",
     desktopImage: "/images/products/kanjivaram-zari-tissue-4.jpg",
+    imageAlt: "SilkMode Fashion Surat - Handcrafted Silk Sarees & Bridal Ethnic Wear",
   },
   {
     id: 2,
@@ -36,6 +38,7 @@ const HERO_SLIDES: HeroSlide[] = [
     ctaText: "VIEW LEHENGA • ₹18,999",
     ctaLink: "/products/bridal-lehenga-choli-gadhwal-silk-crystal-beads-work",
     desktopImage: "/images/products/bridal-lehenga-3116b-front.jpg",
+    imageAlt: "SilkMode Fashion Surat - Royal Bridal Gadhwal Silk Lehenga Choli",
   },
 ];
 
@@ -81,7 +84,7 @@ export default function HeroBanner() {
             <div className="relative w-full h-full">
               <Image
                 src={slide.desktopImage}
-                alt={slide.title}
+                alt={slide.imageAlt}
                 fill
                 priority={index === 0}
                 className={`object-cover object-[68%_center] md:object-center transform transition-transform duration-7000 ease-out ${
@@ -105,13 +108,22 @@ export default function HeroBanner() {
                     </span>
                   </div>
 
-                  {/* Main Headline */}
-                  <h1 className="font-serif-luxury text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-normal text-white leading-[1.12] tracking-tight">
-                    {slide.title} <br className="hidden sm:inline" />
-                    <span className="italic text-[#E0C788] font-serif font-light">
-                      {slide.titleHighlight}
-                    </span>
-                  </h1>
+                  {/* Main Headline - Exactly one H1 for page SEO on slide 0 */}
+                  {index === 0 ? (
+                    <h1 className="font-serif-luxury text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-normal text-white leading-[1.12] tracking-tight">
+                      {slide.title} <br className="hidden sm:inline" />
+                      <span className="italic text-[#E0C788] font-serif font-light">
+                        {slide.titleHighlight}
+                      </span>
+                    </h1>
+                  ) : (
+                    <h2 className="font-serif-luxury text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-normal text-white leading-[1.12] tracking-tight">
+                      {slide.title} <br className="hidden sm:inline" />
+                      <span className="italic text-[#E0C788] font-serif font-light">
+                        {slide.titleHighlight}
+                      </span>
+                    </h2>
+                  )}
 
                   {/* Subtitle */}
                   <p className="mt-3 sm:mt-5 text-sm sm:text-base md:text-lg text-[#E6DDD0] font-light leading-relaxed max-w-lg">

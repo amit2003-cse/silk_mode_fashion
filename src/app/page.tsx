@@ -1,79 +1,49 @@
-"use client";
+import type { Metadata } from "next";
+import HomeClient from "./HomeClient";
 
-import React, { useState } from "react";
-import AnnouncementBar from "@/components/AnnouncementBar";
-import Header from "@/components/Header";
-import HeroBanner from "@/components/HeroBanner";
-import ShopByCollection from "@/components/ShopByCollection";
-import TrendingCollection from "@/components/TrendingCollection";
-import CustomerReviews from "@/components/CustomerReviews";
-import BrandElegance from "@/components/BrandElegance";
-import PromotionalBanner from "@/components/PromotionalBanner";
-import BestSellers from "@/components/BestSellers";
-import WhyChooseUs from "@/components/WhyChooseUs";
-import BrandStory from "@/components/BrandStory";
-import Footer from "@/components/Footer";
-import ProductQuickViewModal from "@/components/ProductQuickViewModal";
-import { SareeProduct } from "@/data/products";
+export const metadata: Metadata = {
+  title: "SilkMode Fashion Surat | Pure Handcrafted Silk Sarees & Ethnic Wear",
+  description:
+    "Shop authentic Banarasi, Kanjivaram, Organza sarees, and bridal lehengas at manufacturer prices from SilkMode Fashion Surat. Direct artisan weaves & all-India delivery.",
+  keywords: [
+    "SilkMode Fashion",
+    "SilkMode Fashion Surat",
+    "Surat silk sarees",
+    "handcrafted sarees Surat",
+    "bridal lehenga Surat",
+    "designer salwar suits Surat",
+    "Surat saree manufacturer",
+  ],
+  alternates: {
+    canonical: "https://www.silkmodefashion.in/",
+  },
+  openGraph: {
+    title: "SilkMode Fashion Surat | Pure Handcrafted Silk Sarees & Ethnic Wear",
+    description:
+      "Shop authentic Banarasi, Kanjivaram, Organza sarees, and bridal lehengas at manufacturer prices from SilkMode Fashion Surat. Direct artisan weaves & all-India delivery.",
+    url: "https://www.silkmodefashion.in/",
+    siteName: "SilkMode Fashion",
+    images: [
+      {
+        url: "https://www.silkmodefashion.in/images/products/kanjivaram-zari-tissue-4.jpg",
+        width: 1200,
+        height: 630,
+        alt: "SilkMode Fashion Surat - Handcrafted Silk Sarees",
+      },
+    ],
+    locale: "en_IN",
+    type: "website",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "SilkMode Fashion Surat | Pure Handcrafted Silk Sarees & Ethnic Wear",
+    description:
+      "Shop authentic Banarasi, Kanjivaram, Organza sarees, and bridal lehengas at manufacturer prices from SilkMode Fashion Surat. Direct artisan weaves & all-India delivery.",
+    images: ["https://www.silkmodefashion.in/images/products/kanjivaram-zari-tissue-4.jpg"],
+  },
+};
 
 export default function HomePage() {
-  const [selectedProduct, setSelectedProduct] = useState<SareeProduct | null>(null);
-
-  const handleQuickView = (product: SareeProduct) => {
-    setSelectedProduct(product);
-  };
-
-  const handleCloseModal = () => {
-    setSelectedProduct(null);
-  };
-
-  const handleSelectCategory = (categoryName: string) => {
-    const element = document.getElementById("trending");
-    if (element) {
-      element.scrollIntoView({ behavior: "smooth" });
-    }
-  };
-
-  return (
-    <main className="min-h-screen flex flex-col bg-white text-stone-900">
-      {/* 1. Marquee Announcement Bar (right-to-left continuous scroll) */}
-      <AnnouncementBar />
-
-      {/* 2. White Clean Header (Vastrang style with search input) */}
-      <Header onSelectProduct={handleQuickView} />
-
-      {/* 3. Auto-Swapping 2-Slide Hero Carousel with Next/Prev Arrows */}
-      <HeroBanner />
-
-      {/* 4. Shop by Category & Collection */}
-      <ShopByCollection onSelectCategory={handleSelectCategory} />
-
-      {/* 5. Trending Collection (Curated Top Picks + View All) */}
-      <TrendingCollection onQuickView={handleQuickView} />
-
-      {/* 6. "Our customers love us" - 2 Rows of Moving Review Cards */}
-      <CustomerReviews />
-
-      {/* 7. "Discover Timeless Elegance with Silk Mode Fashion" with Gold Brush Underline */}
-      <BrandElegance />
-
-      {/* 8. Handloom Heritage Promotional Banner */}
-      <PromotionalBanner />
-
-      {/* 9. Best Sellers & Featured Weaves */}
-      <BestSellers onQuickView={handleQuickView} />
-
-      {/* 10. Why Choose Us Trust Pillars */}
-      <WhyChooseUs />
-
-      {/* 11. Silk Mode Fashion Brand Heritage Story */}
-      <BrandStory />
-
-      {/* 12. Luxury Wine/Maroon Footer with Contact +91 7359345438 */}
-      <Footer />
-
-      {/* Interactive Saree Quick View Modal */}
-      <ProductQuickViewModal product={selectedProduct} onClose={handleCloseModal} />
-    </main>
-  );
+  return <HomeClient />;
 }
+

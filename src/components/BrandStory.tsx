@@ -13,7 +13,7 @@ export default function BrandStory() {
             <div className="relative aspect-[4/3] rounded-2xl overflow-hidden shadow-xl border-2 border-[#E8DEC8] bg-stone-100">
               <Image
                 src="/images/products/kanjivaram-zari-tissue-1.jpg"
-                alt="Silk Mode Fashion Artisan Heritage"
+                alt="SilkMode Fashion Surat - Master Artisan Handloom Heritage"
                 fill
                 className="object-cover object-top hover:scale-105 transition-transform duration-700"
                 priority
@@ -34,20 +34,20 @@ export default function BrandStory() {
           {/* Story Text */}
           <div className="lg:pl-4">
             <span className="text-xs font-bold text-[#C5A059] uppercase tracking-widest">
-              The Silk Mode Legacy
+              The SilkMode Legacy
             </span>
             <h2 className="mt-2 font-serif-luxury text-2xl sm:text-3xl md:text-4xl text-[#2B2927] leading-tight">
               Honoring India&apos;s Richest Weaving Traditions
             </h2>
             <div className="mt-4 space-y-3 text-sm text-[#6E675F] leading-relaxed">
               <p>
-                At <strong className="text-[#2B2927]">Silk Mode Fashion</strong>, sarees are more than six yards of fabric; they are living heirlooms woven with love, culture, and centuries of indigenous craftsmanship.
+                At <strong className="text-[#2B2927]">SilkMode Fashion Surat</strong>, sarees are more than six yards of fabric; they are living heirlooms woven with love, culture, and centuries of indigenous craftsmanship direct from India&apos;s textile capital.
               </p>
               <p>
-                From royal Banarasi brocades and heavy Kanjivaram silks to breezy party wear satins and organza drapes, our collections celebrate the woman who cherishes her roots while embracing contemporary grace.
+                From royal Banarasi brocades and heavy Kanjivaram silks to breezy party wear satins and organza drapes, SilkMode Fashion celebrates the woman who cherishes her roots while embracing contemporary grace.
               </p>
               <p>
-                Every piece in our catalogue is thoughtfully curated for elegance, longevity, and pure drape comfort.
+                Every piece in our catalogue is thoughtfully curated for elegance, longevity, and pure drape comfort at genuine manufacturer prices.
               </p>
             </div>
 

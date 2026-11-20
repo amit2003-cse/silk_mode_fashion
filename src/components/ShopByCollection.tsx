@@ -48,7 +48,7 @@ export default function ShopByCollection({ onSelectCategory }: ShopByCollectionP
                   <div className="relative w-full h-full rounded-full overflow-hidden">
                     <Image
                       src={item.image}
-                      alt={item.name}
+                      alt={`SilkMode Fashion Surat - ${item.name}`}
                       fill
                       sizes="(max-width: 640px) 88px, (max-width: 768px) 120px, 150px"
                       className="object-cover object-center group-hover:scale-110 transition-transform duration-500"

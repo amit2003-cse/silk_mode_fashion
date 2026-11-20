@@ -97,7 +97,7 @@ export default function Header({ onSelectProduct }: HeaderProps) {
                 <div className="relative w-10 h-10 sm:w-11 sm:h-11 lg:w-11.5 lg:h-11.5 transition-transform group-hover:scale-105 duration-200">
                   <Image
                     src="/images/da66b080-7b45-45d1-bba8-14e0583018dc.png"
-                    alt="Silk Mode Fashion Logo"
+                    alt="SilkMode Fashion Surat - Handcrafted Sarees & Ethnic Wear Logo"
                     fill
                     className="object-contain"
                     priority

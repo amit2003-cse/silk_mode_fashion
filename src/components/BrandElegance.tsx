@@ -9,7 +9,7 @@ export default function BrandElegance() {
           <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-stone-900 tracking-tight">
             Discover Timeless Elegance with{" "}
             <span className="relative inline-block text-stone-900">
-              Silk Mode Fashion
+              SilkMode Fashion Surat
               {/* Artistic Yellow/Gold Brush Underline */}
               <svg
                 className="absolute -bottom-2 left-0 w-full h-3 text-[#E5A93C] overflow-visible"
@@ -31,7 +31,7 @@ export default function BrandElegance() {
         {/* Narrative Copy (Vastrang style) */}
         <div className="mt-8 space-y-4 max-w-3xl mx-auto text-xs sm:text-sm md:text-base text-stone-600 leading-relaxed">
           <p>
-            At <strong className="text-stone-800">Silk Mode Fashion</strong>, we bring you a carefully curated collection of premium designer sarees crafted for weddings, festivals, parties, and every special occasion. From luxurious fabrics to elegant craftsmanship, every saree is designed to celebrate the beauty of Indian tradition with a modern touch.
+            At <strong className="text-stone-800">SilkMode Fashion</strong>, we bring you a carefully curated collection of authentic Surat designer sarees and bridal wear crafted for weddings, festivals, parties, and every special occasion. From luxurious fabrics to elegant craftsmanship, every saree is designed to celebrate the beauty of Indian tradition with a modern touch.
           </p>
           <p className="font-medium text-stone-800">
             Enjoy <span className="font-bold text-[#58111A]">Free Shipping Across India</span>, <span className="font-bold text-[#58111A]">Cash on Delivery</span>, and shop with confidence from a brand trusted by <span className="font-bold text-[#58111A]">2 Lakh+ Happy Customers</span>.

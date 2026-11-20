@@ -11,7 +11,7 @@ export default function PromotionalBanner() {
       <div className="absolute inset-0 z-0">
         <Image
           src="/images/promo-banner.jpg"
-          alt="Artisan Handloom Weaving Heritage"
+          alt="SilkMode Fashion Surat - Handloom Weaving Heritage"
           fill
           className="object-cover object-center opacity-40 scale-105 transition-transform duration-1000"
         />
@@ -30,7 +30,7 @@ export default function PromotionalBanner() {
           </h2>
 
           <p className="mt-4 text-sm sm:text-base text-[#E6DDD0] leading-relaxed">
-            Every saree at Silk Mode Fashion is woven with pure mulberry silk yarns, real zari brocades, and weeks of meticulous artisan dedication. Experience heirloom quality crafted for generations.
+            Every saree at SilkMode Fashion Surat is woven with pure mulberry silk yarns, real zari brocades, and weeks of meticulous artisan dedication. Experience heirloom quality crafted for generations at direct manufacturer prices.
           </p>
 
           <div className="mt-8 flex flex-col sm:flex-row items-stretch sm:items-center space-y-3 sm:space-y-0 sm:space-x-4">

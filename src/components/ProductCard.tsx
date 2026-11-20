@@ -55,7 +55,7 @@ export default function ProductCard({ product, onQuickView }: ProductCardProps) 
       >
         <Image
           src={imageSource}
-          alt={product.name}
+          alt={`${product.name} | SilkMode Fashion Surat`}
           fill
           onError={() => setImageError(true)}
           sizes="(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 25vw"

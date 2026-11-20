@@ -33,6 +33,9 @@ export async function generateMetadata({
   return {
     title: `${product.name} | Silk Mode Fashion Surat`,
     description: product.description,
+    alternates: {
+      canonical: `/products/${product.slug}`,
+    },
     openGraph: {
       title: `${product.name} | Silk Mode Fashion`,
       description: product.description,

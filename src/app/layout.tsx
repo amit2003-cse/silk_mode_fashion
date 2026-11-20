@@ -4,6 +4,7 @@ import FloatingWhatsApp from "@/components/FloatingWhatsApp";
 import MobileBottomNav from "@/components/MobileBottomNav";
 
 export const metadata: Metadata = {
+  metadataBase: new URL("https://www.silkmodefashion.in"),
   title: "Silk Mode Fashion | Premium Handcrafted Sarees & Ethnic Wear",
   description: "Explore the royal collection of Banarasi, Kanjivaram, Organza, and Designer Sarees woven in timeless tradition at Silk Mode Fashion.",
   icons: {
