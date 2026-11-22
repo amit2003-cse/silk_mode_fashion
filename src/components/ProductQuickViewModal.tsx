@@ -6,6 +6,7 @@ import Link from "next/link";
 import { X, MessageCircle, CheckCircle, Sparkles, ArrowRight } from "lucide-react";
 import { SareeProduct } from "@/data/products";
 import { getProductWhatsAppUrl } from "@/lib/whatsapp";
+import { trackWhatsAppClick } from "@/lib/gtm";
 
 interface ProductQuickViewModalProps {
   product: SareeProduct | null;
@@ -217,6 +218,15 @@ export default function ProductQuickViewModal({ product, onClose }: ProductQuick
               })}
               target="_blank"
               rel="noopener noreferrer"
+              onClick={() =>
+                trackWhatsAppClick({
+                  button_location: "quick_view_modal",
+                  product_name: product.name,
+                  product_id: product.id,
+                  category: product.category,
+                  price: product.price,
+                })
+              }
               className="w-full flex items-center justify-center space-x-2 py-2.5 sm:py-3 px-4 rounded-xl bg-[#25D366] hover:bg-[#20BE5C] text-white font-semibold text-xs sm:text-sm shadow-md transition"
             >
               <MessageCircle className="w-4 h-4 sm:w-5 sm:h-5 fill-current" />

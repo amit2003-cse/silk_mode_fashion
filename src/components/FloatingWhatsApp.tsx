@@ -2,6 +2,7 @@
 
 import React from "react";
 import { getGeneralWhatsAppUrl } from "@/lib/whatsapp";
+import { trackWhatsAppClick } from "@/lib/gtm";
 
 export default function FloatingWhatsApp() {
   return (
@@ -14,6 +15,7 @@ export default function FloatingWhatsApp() {
         target="_blank"
         rel="noopener noreferrer"
         aria-label="Chat on WhatsApp"
+        onClick={() => trackWhatsAppClick({ button_location: "floating_button" })}
         className="w-14 h-14 md:w-15 md:h-15 bg-[#25D366] hover:bg-[#20BE5C] text-white rounded-full flex items-center justify-center shadow-xl hover:shadow-2xl transition-all duration-300 transform hover:scale-110 active:scale-95 animate-pulse-whatsapp"
       >
         <svg

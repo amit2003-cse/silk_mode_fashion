@@ -1,8 +1,11 @@
+"use client";
+
 import React from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { MessageCircle, Award } from "lucide-react";
 import { getGeneralWhatsAppUrl } from "@/lib/whatsapp";
+import { trackWhatsAppClick } from "@/lib/gtm";
 
 export default function PromotionalBanner() {
   return (
@@ -45,6 +48,7 @@ export default function PromotionalBanner() {
               href={getGeneralWhatsAppUrl("Hello, I would like to enquire about your custom handloom saree collection.")}
               target="_blank"
               rel="noopener noreferrer"
+              onClick={() => trackWhatsAppClick({ button_location: "promo_banner_stylist" })}
               className="inline-flex items-center justify-center space-x-2 px-6 py-3 rounded-full bg-white/10 hover:bg-white/20 text-[#FAF6F0] text-xs font-semibold tracking-wider text-center transition border border-white/20"
             >
               <MessageCircle className="w-4 h-4 text-[#25D366]" />

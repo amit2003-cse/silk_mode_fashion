@@ -1,7 +1,10 @@
+"use client";
+
 import React from "react";
 import Image from "next/image";
 import { MessageCircle, HeartHandshake } from "lucide-react";
 import { getGeneralWhatsAppUrl } from "@/lib/whatsapp";
+import { trackWhatsAppClick } from "@/lib/gtm";
 
 export default function BrandStory() {
   return (
@@ -56,6 +59,7 @@ export default function BrandStory() {
                 href={getGeneralWhatsAppUrl("Hello Silk Mode Fashion, I would love to know more about your brand and custom bridal services.")}
                 target="_blank"
                 rel="noopener noreferrer"
+                onClick={() => trackWhatsAppClick({ button_location: "brand_story_founder_chat" })}
                 className="inline-flex items-center space-x-2 px-6 py-3 rounded-full bg-[#58111A] hover:bg-[#460D1B] text-[#FAF6F0] text-xs font-semibold tracking-wider uppercase transition shadow"
               >
                 <MessageCircle className="w-4 h-4 text-[#D4AF37]" />

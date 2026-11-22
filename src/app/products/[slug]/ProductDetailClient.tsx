@@ -23,6 +23,7 @@ import {
 } from "lucide-react";
 import { SareeProduct } from "@/data/products";
 import { getProductWhatsAppUrl } from "@/lib/whatsapp";
+import { trackWhatsAppClick } from "@/lib/gtm";
 import AnnouncementBar from "@/components/AnnouncementBar";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
@@ -468,6 +469,15 @@ export default function ProductDetailClient({
                 href={currentWhatsAppUrl}
                 target="_blank"
                 rel="noopener noreferrer"
+                onClick={() =>
+                  trackWhatsAppClick({
+                    button_location: "product_page_main_cta",
+                    product_name: product.name,
+                    product_id: product.id,
+                    category: product.category,
+                    price: product.price,
+                  })
+                }
                 className="w-full flex items-center justify-center space-x-2 py-4 px-6 rounded-xl bg-[#25D366] hover:bg-[#20BD5A] text-white font-bold text-base shadow-lg shadow-[#25D366]/25 hover:shadow-xl hover:shadow-[#25D366]/35 transition-all duration-300 transform active:scale-98 cursor-pointer"
               >
                 <MessageCircle className="w-5 h-5 fill-white text-[#25D366]" />
@@ -479,6 +489,15 @@ export default function ProductDetailClient({
                 href={videoCallWhatsAppUrl}
                 target="_blank"
                 rel="noopener noreferrer"
+                onClick={() =>
+                  trackWhatsAppClick({
+                    button_location: "product_page_video_call",
+                    product_name: product.name,
+                    product_id: product.id,
+                    category: product.category,
+                    price: product.price,
+                  })
+                }
                 className="w-full flex items-center justify-center space-x-2 py-2.5 px-4 rounded-xl bg-white hover:bg-stone-50 border border-stone-300 text-stone-800 font-semibold text-xs transition shadow-2xs hover:border-stone-400 cursor-pointer"
               >
                 <Video className="w-4 h-4 text-[#58111A]" />
@@ -751,6 +770,15 @@ export default function ProductDetailClient({
           href={currentWhatsAppUrl}
           target="_blank"
           rel="noopener noreferrer"
+          onClick={() =>
+            trackWhatsAppClick({
+              button_location: "product_page_sticky_mobile",
+              product_name: product.name,
+              product_id: product.id,
+              category: product.category,
+              price: product.price,
+            })
+          }
           className="flex items-center space-x-1.5 px-4 py-2.5 rounded-lg bg-[#25D366] text-white font-bold text-xs shrink-0 shadow-md active:scale-95 transition"
         >
           <MessageCircle className="w-4 h-4 fill-white text-[#25D366]" />

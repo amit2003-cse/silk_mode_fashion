@@ -5,6 +5,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { Home, ShoppingBag, LayoutGrid, MessageCircle, X, ChevronRight, Sparkles } from "lucide-react";
 import { getGeneralWhatsAppUrl } from "@/lib/whatsapp";
+import { trackWhatsAppClick } from "@/lib/gtm";
 
 const CATEGORIES_LIST = [
   { name: "All Products", href: "/collections", count: "All Weaves", icon: "✨" },
@@ -131,6 +132,7 @@ export default function MobileBottomNav() {
             href={getGeneralWhatsAppUrl("Hello Silk Mode Fashion, I am browsing your website and would like assistance.")}
             target="_blank"
             rel="noopener noreferrer"
+            onClick={() => trackWhatsAppClick({ button_location: "mobile_bottom_nav" })}
             className="flex flex-col items-center text-[#25D366] hover:text-[#20BE5C] group transition-colors"
           >
             <MessageCircle className="w-5 h-5 mb-1 fill-[#25D366]/10 text-[#25D366] group-active:scale-90 transition-transform" />

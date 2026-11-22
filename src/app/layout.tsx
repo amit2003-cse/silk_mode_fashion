@@ -1,7 +1,9 @@
 import type { Metadata, Viewport } from "next";
+import { GoogleTagManager } from "@next/third-parties/google";
 import "./globals.css";
 import FloatingWhatsApp from "@/components/FloatingWhatsApp";
 import MobileBottomNav from "@/components/MobileBottomNav";
+import { GTM_ID } from "@/lib/gtm";
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://www.silkmodefashion.in"),
@@ -26,6 +28,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
+      <GoogleTagManager gtmId={GTM_ID} />
       <head>
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
@@ -35,6 +38,14 @@ export default function RootLayout({
         />
       </head>
       <body className="antialiased min-h-screen flex flex-col pb-16 md:pb-0">
+        <noscript>
+          <iframe
+            src={`https://www.googletagmanager.com/ns.html?id=${GTM_ID}`}
+            height="0"
+            width="0"
+            style={{ display: "none", visibility: "hidden" }}
+          />
+        </noscript>
         {children}
         <FloatingWhatsApp />
         <MobileBottomNav />

@@ -6,6 +6,7 @@ import Link from "next/link";
 import { Search, Menu, X, ArrowRight, MessageCircle } from "lucide-react";
 import { PRODUCTS_DATA, SareeProduct } from "@/data/products";
 import { getGeneralWhatsAppUrl } from "@/lib/whatsapp";
+import { trackWhatsAppClick } from "@/lib/gtm";
 
 interface HeaderProps {
   onSelectProduct?: (product: SareeProduct) => void;
@@ -247,6 +248,7 @@ export default function Header({ onSelectProduct }: HeaderProps) {
                 href={getGeneralWhatsAppUrl()}
                 target="_blank"
                 rel="noopener noreferrer"
+                onClick={() => trackWhatsAppClick({ button_location: "header_desktop" })}
                 className="hidden sm:inline-flex items-center space-x-1.5 bg-[#58111A] hover:bg-[#460D1B] text-white px-3.5 lg:px-4 py-2 rounded-full text-xs font-medium tracking-wide transition shadow-2xs shrink-0"
               >
                 <MessageCircle className="w-3.5 h-3.5 text-[#25D366]" />
@@ -412,6 +414,7 @@ export default function Header({ onSelectProduct }: HeaderProps) {
                 href={getGeneralWhatsAppUrl()}
                 target="_blank"
                 rel="noopener noreferrer"
+                onClick={() => trackWhatsAppClick({ button_location: "header_mobile_menu" })}
                 className="w-full flex items-center justify-center space-x-2 bg-[#25D366] text-white py-3 rounded-xl font-semibold shadow hover:bg-[#20BE5C] transition"
               >
                 <MessageCircle className="w-5 h-5" />

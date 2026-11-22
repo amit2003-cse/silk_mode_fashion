@@ -5,6 +5,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { MessageCircle, Phone, Mail, ChevronDown } from "lucide-react";
 import { CLIENT_PHONE, getGeneralWhatsAppUrl } from "@/lib/whatsapp";
+import { trackWhatsAppClick } from "@/lib/gtm";
 
 export default function Footer() {
   const [customerCareOpen, setCustomerCareOpen] = useState(false);
@@ -62,6 +63,7 @@ export default function Footer() {
                   href={getGeneralWhatsAppUrl()}
                   target="_blank"
                   rel="noopener noreferrer"
+                  onClick={() => trackWhatsAppClick({ button_location: "footer_contact_direct" })}
                   className="hover:text-[#D4AF37] transition"
                 >
                   WhatsApp: +91 {CLIENT_PHONE} (Instant Support)
@@ -118,27 +120,57 @@ export default function Footer() {
               }`}
             >
               <li>
-                <a href={getGeneralWhatsAppUrl("Track my saree order")} className="hover:text-white transition">
+                <a
+                  href={getGeneralWhatsAppUrl("Track my saree order")}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  onClick={() => trackWhatsAppClick({ button_location: "footer_customer_care_track_order" })}
+                  className="hover:text-white transition"
+                >
                   Track My Order
                 </a>
               </li>
               <li>
-                <a href={getGeneralWhatsAppUrl("Saree fabric & care query")} className="hover:text-white transition">
+                <a
+                  href={getGeneralWhatsAppUrl("Saree fabric & care query")}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  onClick={() => trackWhatsAppClick({ button_location: "footer_customer_care_fabric_guide" })}
+                  className="hover:text-white transition"
+                >
                   Fabric & Care Guide
                 </a>
               </li>
               <li>
-                <a href={getGeneralWhatsAppUrl("Custom blouse stitching enquiry")} className="hover:text-white transition">
+                <a
+                  href={getGeneralWhatsAppUrl("Custom blouse stitching enquiry")}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  onClick={() => trackWhatsAppClick({ button_location: "footer_customer_care_custom_blouse" })}
+                  className="hover:text-white transition"
+                >
                   Custom Blouse Stitching
                 </a>
               </li>
               <li>
-                <a href={getGeneralWhatsAppUrl("Shipping & Delivery assistance")} className="hover:text-white transition">
+                <a
+                  href={getGeneralWhatsAppUrl("Shipping & Delivery assistance")}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  onClick={() => trackWhatsAppClick({ button_location: "footer_customer_care_shipping" })}
+                  className="hover:text-white transition"
+                >
                   Shipping & Delivery
                 </a>
               </li>
               <li>
-                <a href={getGeneralWhatsAppUrl("Returns & Exchange query")} className="hover:text-white transition">
+                <a
+                  href={getGeneralWhatsAppUrl("Returns & Exchange query")}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  onClick={() => trackWhatsAppClick({ button_location: "footer_customer_care_returns" })}
+                  className="hover:text-white transition"
+                >
                   Returns & Exchanges
                 </a>
               </li>
