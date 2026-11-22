@@ -18,7 +18,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     },
   ];
 
-  // 2. Individual public product detail pages (75 unique products)
+  // 2. Individual public product detail pages (all catalog products)
   const productRoutes: MetadataRoute.Sitemap = PRODUCTS_DATA.map((product) => ({
     url: `${baseUrl}/products/${product.slug}`,
     changeFrequency: 'weekly',
