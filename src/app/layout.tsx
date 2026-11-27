@@ -3,6 +3,8 @@ import { GoogleTagManager } from "@next/third-parties/google";
 import "./globals.css";
 import FloatingWhatsApp from "@/components/FloatingWhatsApp";
 import MobileBottomNav from "@/components/MobileBottomNav";
+import LoginModal from "@/components/LoginModal";
+import { AuthProvider } from "@/context/AuthContext";
 import { GTM_ID } from "@/lib/gtm";
 
 export const metadata: Metadata = {
@@ -46,9 +48,12 @@ export default function RootLayout({
             style={{ display: "none", visibility: "hidden" }}
           />
         </noscript>
-        {children}
-        <FloatingWhatsApp />
-        <MobileBottomNav />
+        <AuthProvider>
+          {children}
+          <LoginModal />
+          <FloatingWhatsApp />
+          <MobileBottomNav />
+        </AuthProvider>
       </body>
     </html>
   );

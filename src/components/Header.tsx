@@ -3,10 +3,11 @@
 import React, { useState, useEffect, useRef } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import { Search, Menu, X, ArrowRight, MessageCircle } from "lucide-react";
+import { Search, Menu, X, ArrowRight, MessageCircle, User } from "lucide-react";
 import { PRODUCTS_DATA, SareeProduct } from "@/data/products";
 import { getGeneralWhatsAppUrl } from "@/lib/whatsapp";
 import { trackWhatsAppClick } from "@/lib/gtm";
+import { useAuth } from "@/context/AuthContext";
 
 interface HeaderProps {
   onSelectProduct?: (product: SareeProduct) => void;
@@ -21,6 +22,7 @@ const POPULAR_SEARCHES = [
 ];
 
 export default function Header({ onSelectProduct }: HeaderProps) {
+  const { user, openLoginModal } = useAuth();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [searchOpen, setSearchOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
@@ -242,6 +244,30 @@ export default function Header({ onSelectProduct }: HeaderProps) {
               >
                 <Search className="w-5 h-5" />
               </button>
+
+              {/* Account / Sign In Button */}
+              {user ? (
+                <Link
+                  href="/account"
+                  className="inline-flex items-center space-x-1.5 border border-stone-200 hover:border-[#58111A] text-stone-800 hover:text-[#58111A] px-2.5 sm:px-3 py-1.5 sm:py-2 rounded-full text-xs font-medium transition shrink-0"
+                  aria-label="My Account"
+                >
+                  <User className="w-4 h-4 text-[#58111A]" />
+                  <span className="hidden sm:inline max-w-[90px] truncate">
+                    {user.name?.split(" ")[0] || "Account"}
+                  </span>
+                </Link>
+              ) : (
+                <button
+                  type="button"
+                  onClick={openLoginModal}
+                  className="inline-flex items-center space-x-1.5 border border-stone-200 hover:border-[#58111A] text-stone-800 hover:text-[#58111A] px-2.5 sm:px-3 py-1.5 sm:py-2 rounded-full text-xs font-medium transition shrink-0 cursor-pointer"
+                  aria-label="Sign In"
+                >
+                  <User className="w-4 h-4" />
+                  <span className="hidden sm:inline">Sign In</span>
+                </button>
+              )}
 
               {/* Header WhatsApp Quick Link */}
               <a
