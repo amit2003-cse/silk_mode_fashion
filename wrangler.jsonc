@@ -1,0 +1,15 @@
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "silk-mode-fashion",
+  "main": ".open-next/worker.js",
+  "compatibility_date": "2025-05-05",
+  "compatibility_flags": ["nodejs_compat", "global_fetch_strictly_public"],
+  "assets": {
+    "directory": ".open-next/assets",
+    "binding": "ASSETS"
+  },
+  "vars": {
+    "MONGODB_DB": "silkmodefashion",
+    "R2_PUBLIC_URL": "https://pub-e469e267b4b049eda6d26e83f2ebe5a7.r2.dev"
+  }
+}
