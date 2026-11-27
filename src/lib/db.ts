@@ -48,7 +48,7 @@ export async function ensureIndexes(db?: Db): Promise<void> {
     database.collection("carts").createIndex({ userId: 1 }, { unique: true }),
     database.collection("orders").createIndex({ orderNumber: 1 }, { unique: true }),
     database.collection("orders").createIndex({ userId: 1, createdAt: -1 }),
-    database.collection("return_requests").createIndex({ orderId: 1 }),
+    database.collection("return_requests").createIndex({ orderId: 1 }, { unique: true }),
     database.collection("return_requests").createIndex({ userId: 1, createdAt: -1 }),
     database.collection("webhook_events").createIndex({ eventId: 1 }, { unique: true }),
   ]);

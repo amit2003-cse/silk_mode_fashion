@@ -9,7 +9,7 @@ import {
   Check,
   ShieldCheck,
   Truck,
-  Video,
+  RotateCcw,
   Sparkles,
   ChevronRight,
   ChevronLeft,
@@ -172,11 +172,6 @@ export default function ProductDetailClient({
     code: product.code,
     color: selectedColor,
   });
-
-  // WhatsApp video inspection link
-  const videoCallWhatsAppUrl = `https://wa.me/917359345438?text=${encodeURIComponent(
-    `Namaste Silk Mode Fashion! 🙏\nI am interested in *${product.name}* (Code: ${product.code || "SM"}).\nCan I please request a quick live video call or video clip to inspect the saree's drape and real shine?`
-  )}`;
 
   return (
     <div className="min-h-screen flex flex-col bg-stone-50 text-stone-900">
@@ -506,7 +501,7 @@ export default function ProductDetailClient({
                         type="button"
                         disabled={!inStock}
                         onClick={() => buyNow(product, selectedColor, 1)}
-                        className="w-full flex items-center justify-center space-x-2 py-3.5 px-5 rounded-xl bg-[#C5A059] hover:bg-[#B28E47] disabled:bg-stone-200 text-white font-bold text-sm shadow-md transition cursor-pointer disabled:cursor-not-allowed"
+                        className="w-full flex items-center justify-center space-x-2 py-3.5 px-5 rounded-xl bg-[#FAF3E3] hover:bg-[#F3E6C8] disabled:bg-stone-100 text-[#58111A] disabled:text-stone-400 border border-[#D4B475] disabled:border-stone-200 font-bold text-sm shadow-xs transition cursor-pointer disabled:cursor-not-allowed"
                       >
                         <Zap className="w-4 h-4" />
                         <span>Buy Now</span>
@@ -535,26 +530,6 @@ export default function ProductDetailClient({
                 <span>Enquire & Order on WhatsApp</span>
               </a>
 
-              {/* Secondary CTA: Video Call Request */}
-              <a
-                href={videoCallWhatsAppUrl}
-                target="_blank"
-                rel="noopener noreferrer"
-                onClick={() =>
-                  trackWhatsAppClick({
-                    button_location: "product_page_video_call",
-                    product_name: product.name,
-                    product_id: product.id,
-                    category: product.category,
-                    price: product.price,
-                  })
-                }
-                className="w-full flex items-center justify-center space-x-2 py-2.5 px-4 rounded-xl bg-white hover:bg-stone-50 border border-stone-300 text-stone-800 font-semibold text-xs transition shadow-2xs hover:border-stone-400 cursor-pointer"
-              >
-                <Video className="w-4 h-4 text-[#58111A]" />
-                <span>Request Live Saree Video Inspection on WhatsApp</span>
-              </a>
-
               {/* Reassurance text */}
               <p className="text-center text-[11px] text-stone-500">
                 ⚡ Direct chat with Surat weaver team · Real time response · Custom blouse stitching available
@@ -580,10 +555,10 @@ export default function ProductDetailClient({
               </div>
 
               <div className="flex items-start space-x-2.5 p-3 rounded-xl bg-white border border-stone-200/80">
-                <Video className="w-4 h-4 text-[#58111A] shrink-0 mt-0.5" />
+                <RotateCcw className="w-4 h-4 text-[#58111A] shrink-0 mt-0.5" />
                 <div className="text-xs">
-                  <h5 className="font-bold text-stone-900">Live Video Inspection</h5>
-                  <p className="text-stone-500 text-[11px] mt-0.5">Check drape before packing</p>
+                  <h5 className="font-bold text-stone-900">3-Day Easy Returns</h5>
+                  <p className="text-stone-500 text-[11px] mt-0.5">Damaged or wrong item cover</p>
                 </div>
               </div>
 
@@ -805,36 +780,36 @@ export default function ProductDetailClient({
         </div>
       )}
 
-      {/* ================= STICKY MOBILE BOTTOM ENQUIRY BAR ================= */}
-      <div className="md:hidden fixed bottom-16 inset-x-0 z-30 bg-white/95 backdrop-blur-md border-t border-stone-200 px-4 py-2.5 shadow-lg flex items-center justify-between">
-        <div className="flex items-center space-x-2.5 min-w-0 pr-2">
-          <div className="relative w-10 h-12 rounded overflow-hidden shrink-0 bg-stone-100 border border-stone-200">
+      {/* ================= STICKY MOBILE BOTTOM ACTION BAR ================= */}
+      <div className="md:hidden fixed bottom-16 inset-x-0 z-30 bg-white/95 backdrop-blur-md border-t border-stone-200 px-3 py-2.5 shadow-lg flex items-center justify-between gap-2">
+        <div className="flex items-center space-x-2 min-w-0">
+          <div className="relative w-9 h-11 rounded overflow-hidden shrink-0 bg-stone-100 border border-stone-200">
             <Image src={activeImage} alt={product.name} fill className="object-cover" />
           </div>
           <div className="min-w-0">
             <p className="text-xs font-bold text-[#58111A] leading-tight">{formattedPrice}</p>
-            <p className="text-[10px] text-stone-500 truncate max-w-[120px]">{product.name}</p>
+            <p className="text-[10px] text-stone-500 truncate max-w-[90px]">{product.name}</p>
           </div>
         </div>
 
-        <a
-          href={currentWhatsAppUrl}
-          target="_blank"
-          rel="noopener noreferrer"
-          onClick={() =>
-            trackWhatsAppClick({
-              button_location: "product_page_sticky_mobile",
-              product_name: product.name,
-              product_id: product.id,
-              category: product.category,
-              price: product.price,
-            })
-          }
-          className="flex items-center space-x-1.5 px-4 py-2.5 rounded-lg bg-[#25D366] text-white font-bold text-xs shrink-0 shadow-md active:scale-95 transition"
-        >
-          <MessageCircle className="w-4 h-4 fill-white text-[#25D366]" />
-          <span>Enquire on WhatsApp</span>
-        </a>
+        <div className="flex items-center gap-1.5 shrink-0">
+          <button
+            type="button"
+            onClick={() => addToCart(product, selectedColor, 1)}
+            className="flex items-center space-x-1 px-3 py-2.5 rounded-lg bg-[#58111A] text-white font-bold text-xs shadow-sm active:scale-95 transition"
+          >
+            <ShoppingBag className="w-3.5 h-3.5" />
+            <span>Add</span>
+          </button>
+          <button
+            type="button"
+            onClick={() => buyNow(product, selectedColor, 1)}
+            className="flex items-center space-x-1 px-3 py-2.5 rounded-lg bg-[#FAF3E3] text-[#58111A] border border-[#D4B475] font-bold text-xs shadow-xs active:scale-95 transition"
+          >
+            <Zap className="w-3.5 h-3.5" />
+            <span>Buy Now</span>
+          </button>
+        </div>
       </div>
 
       {/* 5. Footer */}

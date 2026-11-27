@@ -4,9 +4,8 @@ import React, { useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { MessageCircle, ShoppingBag } from "lucide-react";
+import { ShoppingBag, Zap } from "lucide-react";
 import { SareeProduct } from "@/data/products";
-import { getProductWhatsAppUrl } from "@/lib/whatsapp";
 import { useCart } from "@/context/CartContext";
 
 interface ProductCardProps {
@@ -16,7 +15,7 @@ interface ProductCardProps {
 
 export default function ProductCard({ product, onQuickView }: ProductCardProps) {
   const router = useRouter();
-  const { addToCart } = useCart();
+  const { addToCart, buyNow } = useCart();
   const [currentImageIdx, setCurrentImageIdx] = useState(0);
   const [selectedColor, setSelectedColor] = useState<string | undefined>(
     product.colors?.[0]?.name
@@ -148,7 +147,7 @@ export default function ProductCard({ product, onQuickView }: ProductCardProps) 
           )}
         </div>
 
-        {/* Add to Cart + WhatsApp Actions */}
+        {/* Add to Cart + Buy Now Actions */}
         <div className="mt-2.5 pt-2 border-t border-stone-100 space-y-1.5">
           <button
             type="button"
@@ -164,22 +163,19 @@ export default function ProductCard({ product, onQuickView }: ProductCardProps) 
             <span className="truncate">{isVariantInStock ? "Add to Cart" : "Out of Stock"}</span>
           </button>
 
-          <a
-            href={getProductWhatsAppUrl({
-              name: product.name,
-              price: product.price,
-              category: product.category,
-              code: product.code,
-              color: selectedColor,
-            })}
-            target="_blank"
-            rel="noopener noreferrer"
-            onClick={(e) => e.stopPropagation()}
-            className="w-full flex items-center justify-center space-x-1 py-1.5 px-2 rounded-lg bg-[#25D366]/10 hover:bg-[#25D366] text-[#128C7E] hover:text-white border border-[#25D366]/30 transition-all duration-200 text-[10px] sm:text-[11px] font-semibold group/btn truncate cursor-pointer"
+          <button
+            type="button"
+            disabled={!isVariantInStock}
+            onClick={(e) => {
+              e.preventDefault();
+              e.stopPropagation();
+              buyNow(product, selectedColor, 1);
+            }}
+            className="w-full flex items-center justify-center space-x-1 py-1.5 px-2 rounded-lg bg-[#FAF3E3] hover:bg-[#F3E6C8] disabled:bg-stone-100 text-[#58111A] disabled:text-stone-400 border border-[#D4B475] disabled:border-stone-200 transition-all duration-200 text-[11px] sm:text-xs font-semibold truncate cursor-pointer disabled:cursor-not-allowed"
           >
-            <MessageCircle className="w-3 h-3 text-[#25D366] group-hover/btn:text-white transition-colors shrink-0" />
-            <span className="truncate">WhatsApp Enquiry</span>
-          </a>
+            <Zap className="w-3 h-3 shrink-0" />
+            <span className="truncate">Buy Now</span>
+          </button>
         </div>
       </div>
     </div>

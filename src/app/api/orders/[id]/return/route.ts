@@ -31,7 +31,12 @@ export async function POST(
 
     const reason = body.reason?.trim() || "";
     const description = (body.description || "").trim().slice(0, 500);
-    const proofImages = Array.isArray(body.proofImages) ? body.proofImages.slice(0, 3) : [];
+    const r2Base = (process.env.R2_PUBLIC_URL || "").replace(/\/+$/, "");
+    const rawImages = Array.isArray(body.proofImages) ? body.proofImages.slice(0, 3) : [];
+    const proofImages = rawImages.filter(
+      (url): url is string =>
+        typeof url === "string" && (r2Base ? url.startsWith(`${r2Base}/returns/`) : false)
+    );
     const refundUpiOrBank = (body.refundUpiOrBank || "").trim().slice(0, 150);
 
     if (!VALID_REASONS.has(reason)) {
@@ -43,7 +48,7 @@ export async function POST(
 
     if (proofImages.length === 0) {
       return NextResponse.json(
-        { error: "Please upload at least 1 photo as proof of the issue." },
+        { error: "Please upload at least 1 valid proof photo." },
         { status: 400 }
       );
     }

@@ -4,14 +4,14 @@ import { getDb } from "@/lib/db";
 import { requireAdmin } from "@/lib/auth";
 import { notifyOrderStatusUpdate } from "@/lib/notifications";
 
-const ALLOWED_STATUSES = new Set([
-  "placed",
-  "confirmed",
-  "packed",
-  "shipped",
-  "delivered",
-  "cancelled",
-]);
+const ALLOWED_TRANSITIONS: Record<string, Set<string>> = {
+  placed: new Set(["confirmed", "packed", "shipped", "cancelled"]),
+  confirmed: new Set(["packed", "shipped", "delivered", "cancelled"]),
+  packed: new Set(["shipped", "delivered", "cancelled"]),
+  shipped: new Set(["delivered"]),
+  delivered: new Set([]),
+  cancelled: new Set([]),
+};
 
 export async function PATCH(
   req: NextRequest,
@@ -33,7 +33,7 @@ export async function PATCH(
     };
 
     const orderStatus = body.orderStatus?.trim();
-    if (!orderStatus || !ALLOWED_STATUSES.has(orderStatus)) {
+    if (!orderStatus) {
       return NextResponse.json({ error: "Invalid order status." }, { status: 400 });
     }
 
@@ -42,6 +42,30 @@ export async function PATCH(
     const order = await ordersCol.findOne({ _id: new ObjectId(id) });
     if (!order) {
       return NextResponse.json({ error: "Order not found." }, { status: 404 });
+    }
+
+    const currentStatus = order.orderStatus as string;
+    const allowedNext = ALLOWED_TRANSITIONS[currentStatus];
+    if (orderStatus !== currentStatus && (!allowedNext || !allowedNext.has(orderStatus))) {
+      return NextResponse.json(
+        { error: `Cannot transition order from "${currentStatus}" to "${orderStatus}".` },
+        { status: 400 }
+      );
+    }
+
+    // If Admin cancels a non-cancelled order, restore stock
+    if (orderStatus === "cancelled" && currentStatus !== "cancelled") {
+      const productsCol = db.collection("products");
+      const items =
+        (order.items as Array<{ slug: string; colorName?: string; quantity: number }>) ?? [];
+      for (const item of items) {
+        if (item.colorName) {
+          await productsCol.updateOne(
+            { slug: item.slug, "colors.name": item.colorName },
+            { $inc: { "colors.$.stock": item.quantity } }
+          );
+        }
+      }
     }
 
     const now = new Date();

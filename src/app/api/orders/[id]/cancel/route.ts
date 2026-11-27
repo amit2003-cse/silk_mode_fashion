@@ -5,7 +5,7 @@ import { getSessionUser } from "@/lib/auth";
 import { initiateRazorpayRefund } from "@/lib/razorpay";
 import { notifyOrderStatusUpdate } from "@/lib/notifications";
 
-const CANCELLABLE_STATUSES = new Set(["placed", "confirmed", "packed"]);
+const CANCELLABLE_STATUSES = ["placed", "confirmed", "packed"];
 
 export async function POST(
   req: NextRequest,
@@ -27,20 +27,43 @@ export async function POST(
 
     const db = await getDb();
     const ordersCol = db.collection("orders");
-    const order = await ordersCol.findOne({
-      _id: new ObjectId(id),
-      userId: session.userId,
-    });
+    const now = new Date();
+
+    // Atomic state transition prevents double-cancel race conditions
+    const order = await ordersCol.findOneAndUpdate(
+      {
+        _id: new ObjectId(id),
+        userId: session.userId,
+        orderStatus: { $in: CANCELLABLE_STATUSES },
+      },
+      {
+        $set: {
+          orderStatus: "cancelled",
+          cancelledAt: now,
+          cancelReason,
+          updatedAt: now,
+        },
+        $push: {
+          statusHistory: {
+            status: "cancelled",
+            at: now,
+            note: "Order cancelled by customer before shipment.",
+          },
+        } as never,
+      },
+      { returnDocument: "before" }
+    );
 
     if (!order) {
-      return NextResponse.json({ error: "Order not found." }, { status: 404 });
-    }
-
-    if (!CANCELLABLE_STATUSES.has(order.orderStatus as string)) {
+      const existing = await ordersCol.findOne({
+        _id: new ObjectId(id),
+        userId: session.userId,
+      });
+      if (!existing) {
+        return NextResponse.json({ error: "Order not found." }, { status: 404 });
+      }
       return NextResponse.json(
-        {
-          error: `Order cannot be cancelled once it is "${order.orderStatus}".`,
-        },
+        { error: `Order cannot be cancelled once it is "${existing.orderStatus}".` },
         { status: 400 }
       );
     }
@@ -48,7 +71,11 @@ export async function POST(
     let nextPaymentStatus = order.paymentStatus as string;
     let refundNote = "Order cancelled by customer before shipment.";
 
-    if (order.paymentMethod === "razorpay" && order.paymentStatus === "paid" && order.razorpayPaymentId) {
+    if (
+      order.paymentMethod === "razorpay" &&
+      order.paymentStatus === "paid" &&
+      order.razorpayPaymentId
+    ) {
       try {
         const refund = await initiateRazorpayRefund({
           razorpayPaymentId: order.razorpayPaymentId as string,
@@ -63,32 +90,17 @@ export async function POST(
         nextPaymentStatus = "refund_pending";
         refundNote = "Order cancelled. Refund queued for manual verification.";
       }
+
+      await ordersCol.updateOne(
+        { _id: order._id },
+        { $set: { paymentStatus: nextPaymentStatus, updatedAt: new Date() } }
+      );
     }
 
-    const now = new Date();
-    await ordersCol.updateOne(
-      { _id: order._id },
-      {
-        $set: {
-          orderStatus: "cancelled",
-          paymentStatus: nextPaymentStatus,
-          cancelledAt: now,
-          cancelReason,
-          updatedAt: now,
-        },
-        $push: {
-          statusHistory: {
-            status: "cancelled",
-            at: now,
-            note: refundNote,
-          },
-        } as never,
-      }
-    );
-
-    // Restore colour-variant stock
+    // Restore colour-variant stock exactly once
     const productsCol = db.collection("products");
-    const items = (order.items as Array<{ slug: string; colorName?: string; quantity: number }>) ?? [];
+    const items =
+      (order.items as Array<{ slug: string; colorName?: string; quantity: number }>) ?? [];
     for (const item of items) {
       if (item.colorName) {
         await productsCol.updateOne(
@@ -107,7 +119,11 @@ export async function POST(
       customerName: order.customerName as string,
     });
 
-    return NextResponse.json({ ok: true, orderStatus: "cancelled", paymentStatus: nextPaymentStatus });
+    return NextResponse.json({
+      ok: true,
+      orderStatus: "cancelled",
+      paymentStatus: nextPaymentStatus,
+    });
   } catch (error) {
     console.error("Cancel order error:", error);
     return NextResponse.json({ error: "Unable to cancel order." }, { status: 500 });

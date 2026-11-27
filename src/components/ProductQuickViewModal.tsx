@@ -228,7 +228,7 @@ export default function ProductQuickViewModal({ product, onClose }: ProductQuick
                   onClose();
                   buyNow(product, selectedColor, 1);
                 }}
-                className="flex items-center justify-center space-x-1.5 py-2.5 px-3 rounded-xl bg-[#C5A059] hover:bg-[#B28E47] disabled:bg-stone-200 text-white font-semibold text-xs transition cursor-pointer disabled:cursor-not-allowed"
+                className="flex items-center justify-center space-x-1.5 py-2.5 px-3 rounded-xl bg-[#FAF3E3] hover:bg-[#F3E6C8] disabled:bg-stone-100 text-[#58111A] disabled:text-stone-400 border border-[#D4B475] disabled:border-stone-200 font-semibold text-xs transition cursor-pointer disabled:cursor-not-allowed"
               >
                 <Zap className="w-4 h-4 shrink-0" />
                 <span>Buy Now</span>

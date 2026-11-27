@@ -93,6 +93,12 @@ export async function PATCH(req: NextRequest) {
     setSessionCookie(response, token);
     return response;
   } catch (error) {
+    if (error && typeof error === "object" && "code" in error && (error as { code?: number }).code === 11000) {
+      return NextResponse.json(
+        { error: "This mobile number is already linked to another account." },
+        { status: 409 }
+      );
+    }
     console.error("Profile update error:", error);
     return NextResponse.json({ error: "Failed to update profile." }, { status: 500 });
   }

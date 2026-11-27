@@ -1,14 +1,31 @@
 "use client";
 
 import React from "react";
+import { usePathname } from "next/navigation";
 import { getGeneralWhatsAppUrl } from "@/lib/whatsapp";
 import { trackWhatsAppClick } from "@/lib/gtm";
+import { useCart } from "@/context/CartContext";
+import { useAuth } from "@/context/AuthContext";
+
+const HIDDEN_PREFIXES = ["/checkout", "/orders", "/admin", "/account"];
 
 export default function FloatingWhatsApp() {
+  const pathname = usePathname();
+  const { isCartOpen } = useCart();
+  const { isLoginModalOpen } = useAuth();
+
+  if (
+    isCartOpen ||
+    isLoginModalOpen ||
+    HIDDEN_PREFIXES.some((prefix) => pathname.startsWith(prefix))
+  ) {
+    return null;
+  }
+
   return (
     <aside
       aria-label="WhatsApp Support"
-      className="fixed bottom-20 md:bottom-7 right-5 md:right-7 z-50 flex items-center"
+      className="hidden md:flex fixed bottom-7 right-7 z-40 items-center"
     >
       <a
         href={getGeneralWhatsAppUrl()}
@@ -16,7 +33,7 @@ export default function FloatingWhatsApp() {
         rel="noopener noreferrer"
         aria-label="Chat on WhatsApp"
         onClick={() => trackWhatsAppClick({ button_location: "floating_button" })}
-        className="w-14 h-14 md:w-15 md:h-15 bg-[#25D366] hover:bg-[#20BE5C] text-white rounded-full flex items-center justify-center shadow-xl hover:shadow-2xl transition-all duration-300 transform hover:scale-110 active:scale-95 animate-pulse-whatsapp"
+        className="w-14 h-14 bg-[#25D366] hover:bg-[#20BE5C] text-white rounded-full flex items-center justify-center shadow-xl hover:shadow-2xl transition-all duration-300 transform hover:scale-110 active:scale-95 animate-pulse-whatsapp"
       >
         <svg
           viewBox="0 0 24 24"
