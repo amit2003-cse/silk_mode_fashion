@@ -120,59 +120,34 @@ export default function Footer() {
               }`}
             >
               <li>
-                <a
-                  href={getGeneralWhatsAppUrl("Track my saree order")}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  onClick={() => trackWhatsAppClick({ button_location: "footer_customer_care_track_order" })}
-                  className="hover:text-white transition"
-                >
+                <Link href="/orders" className="hover:text-white transition">
                   Track My Order
-                </a>
+                </Link>
               </li>
               <li>
-                <a
-                  href={getGeneralWhatsAppUrl("Saree fabric & care query")}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  onClick={() => trackWhatsAppClick({ button_location: "footer_customer_care_fabric_guide" })}
-                  className="hover:text-white transition"
-                >
-                  Fabric & Care Guide
-                </a>
+                <Link href="/shipping-policy" className="hover:text-white transition">
+                  Shipping &amp; Delivery Policy
+                </Link>
               </li>
               <li>
-                <a
-                  href={getGeneralWhatsAppUrl("Custom blouse stitching enquiry")}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  onClick={() => trackWhatsAppClick({ button_location: "footer_customer_care_custom_blouse" })}
-                  className="hover:text-white transition"
-                >
-                  Custom Blouse Stitching
-                </a>
+                <Link href="/return-policy" className="hover:text-white transition">
+                  Returns &amp; Refund Policy
+                </Link>
               </li>
               <li>
-                <a
-                  href={getGeneralWhatsAppUrl("Shipping & Delivery assistance")}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  onClick={() => trackWhatsAppClick({ button_location: "footer_customer_care_shipping" })}
-                  className="hover:text-white transition"
-                >
-                  Shipping & Delivery
-                </a>
+                <Link href="/privacy-policy" className="hover:text-white transition">
+                  Privacy Policy
+                </Link>
               </li>
               <li>
-                <a
-                  href={getGeneralWhatsAppUrl("Returns & Exchange query")}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  onClick={() => trackWhatsAppClick({ button_location: "footer_customer_care_returns" })}
-                  className="hover:text-white transition"
-                >
-                  Returns & Exchanges
-                </a>
+                <Link href="/terms" className="hover:text-white transition">
+                  Terms &amp; Conditions
+                </Link>
+              </li>
+              <li>
+                <Link href="/contact" className="hover:text-white transition">
+                  Contact Us
+                </Link>
               </li>
             </ul>
           </div>
@@ -197,27 +172,27 @@ export default function Footer() {
               }`}
             >
               <li>
-                <Link href="#collections" className="hover:text-white transition">
+                <Link href="/collections" className="hover:text-white transition">
                   All Collections
                 </Link>
               </li>
               <li>
-                <Link href="#trending" className="hover:text-white transition">
+                <Link href="/#trending" className="hover:text-white transition">
                   Trending Sarees
                 </Link>
               </li>
               <li>
-                <Link href="#bestsellers" className="hover:text-white transition">
+                <Link href="/#bestsellers" className="hover:text-white transition">
                   Best Sellers
                 </Link>
               </li>
               <li>
-                <Link href="#about" className="hover:text-white transition">
+                <Link href="/#about" className="hover:text-white transition">
                   About Silk Mode Fashion
                 </Link>
               </li>
               <li>
-                <Link href="#why-us" className="hover:text-white transition">
+                <Link href="/#why-us" className="hover:text-white transition">
                   Why Choose Us
                 </Link>
               </li>
