@@ -154,14 +154,31 @@ export default function AccountPage() {
                   {user.phone ? `+91 ${user.phone}` : ""}
                 </p>
               </div>
-              <button
-                type="button"
-                onClick={logout}
-                className="inline-flex items-center gap-1.5 px-4 py-2 rounded-full border border-stone-200 text-xs font-semibold text-stone-700 hover:border-[#58111A] hover:text-[#58111A] transition cursor-pointer self-start"
-              >
-                <LogOut className="w-3.5 h-3.5" />
-                <span>Sign Out</span>
-              </button>
+              <div className="flex flex-wrap items-center gap-2 self-start">
+                {user.role === "admin" && (
+                  <Link
+                    href="/admin"
+                    className="inline-flex items-center gap-1.5 px-4 py-2 rounded-full bg-[#C5A059] hover:bg-[#B28E47] text-white text-xs font-semibold transition"
+                  >
+                    <Shield className="w-3.5 h-3.5" />
+                    <span>Admin Panel</span>
+                  </Link>
+                )}
+                <Link
+                  href="/orders"
+                  className="inline-flex items-center gap-1.5 px-4 py-2 rounded-full bg-[#58111A] hover:bg-[#460D1B] text-white text-xs font-semibold transition"
+                >
+                  <span>My Orders</span>
+                </Link>
+                <button
+                  type="button"
+                  onClick={logout}
+                  className="inline-flex items-center gap-1.5 px-4 py-2 rounded-full border border-stone-200 text-xs font-semibold text-stone-700 hover:border-[#58111A] hover:text-[#58111A] transition cursor-pointer"
+                >
+                  <LogOut className="w-3.5 h-3.5" />
+                  <span>Sign Out</span>
+                </button>
+              </div>
             </div>
 
             {/* Profile Edit Form */}

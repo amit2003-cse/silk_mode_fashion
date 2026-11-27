@@ -18,7 +18,25 @@ type ViewMode = "grid" | "list";
 
 function CollectionsContent() {
   const searchParams = useSearchParams();
+  const [products, setProducts] = useState<SareeProduct[]>(PRODUCTS_DATA);
   const [selectedProduct, setSelectedProduct] = useState<SareeProduct | null>(null);
+
+  useEffect(() => {
+    let active = true;
+    fetch("/api/products")
+      .then((res) => (res.ok ? res.json() : null))
+      .then((data: { products?: SareeProduct[] } | null) => {
+        if (active && data?.products && data.products.length > 0) {
+          setProducts(data.products);
+        }
+      })
+      .catch(() => {
+        // keep static fallback
+      });
+    return () => {
+      active = false;
+    };
+  }, []);
   
   // Applied filters (active on the page)
   const [selectedCategory, setSelectedCategory] = useState<string>("All");
@@ -34,7 +52,7 @@ function CollectionsContent() {
   const [sortDropdownOpen, setSortDropdownOpen] = useState(false);
 
   // Available categories
-  const categories = ["All", ...Array.from(new Set(PRODUCTS_DATA.map((p) => p.category)))];
+  const categories = ["All", ...Array.from(new Set(products.map((p) => p.category)))];
 
   // Auto-sync category from URL query parameters (e.g. ?category=Salwar%20Suit)
   useEffect(() => {
@@ -84,18 +102,18 @@ function CollectionsContent() {
 
   // Calculate matching count for the draft filters in drawer
   const draftMatchCount = useMemo(() => {
-    return PRODUCTS_DATA.filter((product) => {
+    return products.filter((product) => {
       if (draftCategory !== "All" && product.category !== draftCategory) return false;
       if (draftPriceRange === "under-2500" && product.price >= 2500) return false;
       if (draftPriceRange === "2500-4000" && (product.price < 2500 || product.price > 4000)) return false;
       if (draftPriceRange === "above-4000" && product.price <= 4000) return false;
       return true;
     }).length;
-  }, [draftCategory, draftPriceRange]);
+  }, [products, draftCategory, draftPriceRange]);
 
   // Filter and Sort logic for the actual page
   const filteredProducts = useMemo(() => {
-    return PRODUCTS_DATA.filter((product) => {
+    return products.filter((product) => {
       // Category filter
       if (selectedCategory !== "All" && product.category !== selectedCategory) {
         return false;
@@ -112,7 +130,7 @@ function CollectionsContent() {
       if (sortBy === "name-asc") return a.name.localeCompare(b.name);
       return 0; // "featured" maintains default curated order
     });
-  }, [selectedCategory, selectedPriceRange, sortBy]);
+  }, [products, selectedCategory, selectedPriceRange, sortBy]);
 
   const activeFilterCount =
     (selectedCategory !== "All" ? 1 : 0) + (selectedPriceRange !== "all" ? 1 : 0);

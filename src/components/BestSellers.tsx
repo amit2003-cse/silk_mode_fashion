@@ -6,6 +6,7 @@ import { PRODUCTS_DATA, SareeProduct } from "@/data/products";
 import ProductCard from "./ProductCard";
 
 interface BestSellersProps {
+  products?: SareeProduct[];
   onQuickView: (product: SareeProduct) => void;
 }
 
@@ -19,15 +20,18 @@ const BEST_SELLER_CURATED_IDS = [
   "sm-kut-46", // Traditional Kutchi Garchola Modal Silk Saree
 ];
 
-export default function BestSellers({ onQuickView }: BestSellersProps) {
+export default function BestSellers({
+  products = PRODUCTS_DATA,
+  onQuickView,
+}: BestSellersProps) {
   const [showAll, setShowAll] = useState(false);
 
   // All featured products
-  const allFeaturedProducts = PRODUCTS_DATA.filter((p) => p.featured);
+  const allFeaturedProducts = products.filter((p) => p.featured);
 
   // Top 6 handpicked products
   const topCurated = BEST_SELLER_CURATED_IDS
-    .map((id) => PRODUCTS_DATA.find((p) => p.id === id))
+    .map((id) => products.find((p) => p.id === id))
     .filter((p): p is SareeProduct => Boolean(p));
 
   const initialProducts = topCurated.length >= 4 ? topCurated : allFeaturedProducts.slice(0, 6);

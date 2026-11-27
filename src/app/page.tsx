@@ -1,5 +1,8 @@
 import type { Metadata } from "next";
 import HomeClient from "./HomeClient";
+import { getActiveProductsFromDb } from "@/lib/products";
+
+export const dynamic = "force-dynamic";
 
 export const metadata: Metadata = {
   title: "SilkMode Fashion Surat | Pure Handcrafted Silk Sarees & Ethnic Wear",
@@ -43,7 +46,8 @@ export const metadata: Metadata = {
   },
 };
 
-export default function HomePage() {
-  return <HomeClient />;
+export default async function HomePage() {
+  const products = await getActiveProductsFromDb();
+  return <HomeClient products={products} />;
 }
 

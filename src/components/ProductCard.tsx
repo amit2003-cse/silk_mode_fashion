@@ -4,9 +4,10 @@ import React, { useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { MessageCircle } from "lucide-react";
+import { MessageCircle, ShoppingBag } from "lucide-react";
 import { SareeProduct } from "@/data/products";
 import { getProductWhatsAppUrl } from "@/lib/whatsapp";
+import { useCart } from "@/context/CartContext";
 
 interface ProductCardProps {
   product: SareeProduct;
@@ -15,6 +16,7 @@ interface ProductCardProps {
 
 export default function ProductCard({ product, onQuickView }: ProductCardProps) {
   const router = useRouter();
+  const { addToCart } = useCart();
   const [currentImageIdx, setCurrentImageIdx] = useState(0);
   const [selectedColor, setSelectedColor] = useState<string | undefined>(
     product.colors?.[0]?.name
@@ -25,6 +27,12 @@ export default function ProductCard({ product, onQuickView }: ProductCardProps) 
   const formattedOriginalPrice = product.originalPrice
     ? `MRP ₹${product.originalPrice.toLocaleString("en-IN")}`
     : null;
+
+  const selectedColorObj =
+    (selectedColor ? product.colors?.find((c) => c.name === selectedColor) : undefined) ||
+    product.colors?.[0];
+  const isVariantInStock =
+    product.inStock !== false && (selectedColorObj?.stock ?? 10) > 0;
 
   // Fallback image if remote URL fails
   const imageSource = imageError
@@ -140,8 +148,22 @@ export default function ProductCard({ product, onQuickView }: ProductCardProps) 
           )}
         </div>
 
-        {/* WhatsApp Direct Enquiry Action Button */}
-        <div className="mt-2.5 pt-2 border-t border-stone-100">
+        {/* Add to Cart + WhatsApp Actions */}
+        <div className="mt-2.5 pt-2 border-t border-stone-100 space-y-1.5">
+          <button
+            type="button"
+            disabled={!isVariantInStock}
+            onClick={(e) => {
+              e.preventDefault();
+              e.stopPropagation();
+              addToCart(product, selectedColor, 1);
+            }}
+            className="w-full flex items-center justify-center space-x-1.5 py-1.5 px-2 sm:py-2 sm:px-3 rounded-lg bg-[#58111A] hover:bg-[#430D14] disabled:bg-stone-300 text-white transition-all duration-200 text-[11px] sm:text-xs font-semibold cursor-pointer disabled:cursor-not-allowed"
+          >
+            <ShoppingBag className="w-3 h-3 sm:w-3.5 sm:h-3.5 shrink-0" />
+            <span className="truncate">{isVariantInStock ? "Add to Cart" : "Out of Stock"}</span>
+          </button>
+
           <a
             href={getProductWhatsAppUrl({
               name: product.name,
@@ -153,9 +175,9 @@ export default function ProductCard({ product, onQuickView }: ProductCardProps) 
             target="_blank"
             rel="noopener noreferrer"
             onClick={(e) => e.stopPropagation()}
-            className="w-full flex items-center justify-center space-x-1 py-1.5 px-2 sm:py-2 sm:px-3 rounded-lg bg-[#25D366]/10 hover:bg-[#25D366] text-[#128C7E] hover:text-white border border-[#25D366]/30 transition-all duration-200 text-[11px] sm:text-xs font-semibold group/btn truncate cursor-pointer"
+            className="w-full flex items-center justify-center space-x-1 py-1.5 px-2 rounded-lg bg-[#25D366]/10 hover:bg-[#25D366] text-[#128C7E] hover:text-white border border-[#25D366]/30 transition-all duration-200 text-[10px] sm:text-[11px] font-semibold group/btn truncate cursor-pointer"
           >
-            <MessageCircle className="w-3 h-3 sm:w-3.5 sm:h-3.5 text-[#25D366] group-hover/btn:text-white transition-colors shrink-0" />
+            <MessageCircle className="w-3 h-3 text-[#25D366] group-hover/btn:text-white transition-colors shrink-0" />
             <span className="truncate">WhatsApp Enquiry</span>
           </a>
         </div>

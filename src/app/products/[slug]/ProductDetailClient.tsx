@@ -20,10 +20,13 @@ import {
   X,
   PhoneCall,
   Star,
+  ShoppingBag,
+  Zap,
 } from "lucide-react";
 import { SareeProduct } from "@/data/products";
 import { getProductWhatsAppUrl } from "@/lib/whatsapp";
 import { trackWhatsAppClick } from "@/lib/gtm";
+import { useCart } from "@/context/CartContext";
 import AnnouncementBar from "@/components/AnnouncementBar";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
@@ -38,6 +41,7 @@ export default function ProductDetailClient({
   product,
   relatedProducts,
 }: ProductDetailClientProps) {
+  const { addToCart, buyNow } = useCart();
   const [selectedImageIdx, setSelectedImageIdx] = useState(0);
   const [selectedColor, setSelectedColor] = useState<string | undefined>(
     product.colors?.[0]?.name
@@ -463,8 +467,55 @@ export default function ProductDetailClient({
               </div>
             )}
 
-            {/* PRIMARY CONVERSION CTA: Enquire on WhatsApp */}
+            {/* PRIMARY CONVERSION CTAs: Add to Cart, Buy Now & WhatsApp */}
             <div className="space-y-3 pt-2">
+              {(() => {
+                const colorObj =
+                  (selectedColor ? product.colors?.find((c) => c.name === selectedColor) : undefined) ||
+                  product.colors?.[0];
+                const variantStock = product.inStock === false ? 0 : (colorObj?.stock ?? 10);
+                const inStock = variantStock > 0;
+
+                return (
+                  <div className="space-y-2">
+                    <div className="flex items-center justify-between text-xs">
+                      <span
+                        className={`font-semibold ${
+                          inStock ? "text-emerald-700" : "text-red-600"
+                        }`}
+                      >
+                        {inStock
+                          ? variantStock <= 3
+                            ? `Only ${variantStock} left in this shade`
+                            : "In Stock • Ready to Dispatch"
+                          : "Out of Stock in selected shade"}
+                      </span>
+                    </div>
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
+                      <button
+                        type="button"
+                        disabled={!inStock}
+                        onClick={() => addToCart(product, selectedColor, 1)}
+                        className="w-full flex items-center justify-center space-x-2 py-3.5 px-5 rounded-xl bg-[#58111A] hover:bg-[#430D14] disabled:bg-stone-300 text-white font-bold text-sm shadow-md transition cursor-pointer disabled:cursor-not-allowed"
+                      >
+                        <ShoppingBag className="w-4 h-4" />
+                        <span>{inStock ? "Add to Cart" : "Out of Stock"}</span>
+                      </button>
+
+                      <button
+                        type="button"
+                        disabled={!inStock}
+                        onClick={() => buyNow(product, selectedColor, 1)}
+                        className="w-full flex items-center justify-center space-x-2 py-3.5 px-5 rounded-xl bg-[#C5A059] hover:bg-[#B28E47] disabled:bg-stone-200 text-white font-bold text-sm shadow-md transition cursor-pointer disabled:cursor-not-allowed"
+                      >
+                        <Zap className="w-4 h-4" />
+                        <span>Buy Now</span>
+                      </button>
+                    </div>
+                  </div>
+                );
+              })()}
+
               <a
                 href={currentWhatsAppUrl}
                 target="_blank"

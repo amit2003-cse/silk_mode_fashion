@@ -3,11 +3,12 @@
 import React, { useState, useEffect, useRef } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import { Search, Menu, X, ArrowRight, MessageCircle, User } from "lucide-react";
+import { Search, Menu, X, ArrowRight, MessageCircle, User, ShoppingBag } from "lucide-react";
 import { PRODUCTS_DATA, SareeProduct } from "@/data/products";
 import { getGeneralWhatsAppUrl } from "@/lib/whatsapp";
 import { trackWhatsAppClick } from "@/lib/gtm";
 import { useAuth } from "@/context/AuthContext";
+import { useCart } from "@/context/CartContext";
 
 interface HeaderProps {
   onSelectProduct?: (product: SareeProduct) => void;
@@ -23,6 +24,7 @@ const POPULAR_SEARCHES = [
 
 export default function Header({ onSelectProduct }: HeaderProps) {
   const { user, openLoginModal } = useAuth();
+  const { totalCount, openCart } = useCart();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [searchOpen, setSearchOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
@@ -268,6 +270,21 @@ export default function Header({ onSelectProduct }: HeaderProps) {
                   <span className="hidden sm:inline">Sign In</span>
                 </button>
               )}
+
+              {/* Cart Drawer Trigger */}
+              <button
+                type="button"
+                onClick={openCart}
+                className="relative p-2 text-stone-800 hover:text-[#58111A] transition cursor-pointer"
+                aria-label="Open shopping bag"
+              >
+                <ShoppingBag className="w-5 h-5" />
+                {totalCount > 0 && (
+                  <span className="absolute -top-0.5 -right-0.5 min-w-[18px] h-[18px] px-1 rounded-full bg-[#58111A] text-white text-[10px] font-bold flex items-center justify-center">
+                    {totalCount}
+                  </span>
+                )}
+              </button>
 
               {/* Header WhatsApp Quick Link */}
               <a

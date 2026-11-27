@@ -4,7 +4,9 @@ import "./globals.css";
 import FloatingWhatsApp from "@/components/FloatingWhatsApp";
 import MobileBottomNav from "@/components/MobileBottomNav";
 import LoginModal from "@/components/LoginModal";
+import CartDrawer from "@/components/CartDrawer";
 import { AuthProvider } from "@/context/AuthContext";
+import { CartProvider } from "@/context/CartContext";
 import { GTM_ID } from "@/lib/gtm";
 
 export const metadata: Metadata = {
@@ -49,10 +51,13 @@ export default function RootLayout({
           />
         </noscript>
         <AuthProvider>
-          {children}
-          <LoginModal />
-          <FloatingWhatsApp />
-          <MobileBottomNav />
+          <CartProvider>
+            {children}
+            <LoginModal />
+            <CartDrawer />
+            <FloatingWhatsApp />
+            <MobileBottomNav />
+          </CartProvider>
         </AuthProvider>
       </body>
     </html>

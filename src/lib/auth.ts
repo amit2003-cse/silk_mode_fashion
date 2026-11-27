@@ -132,3 +132,23 @@ export async function getSessionUser(): Promise<SessionPayload | null> {
   if (!token) return null;
   return verifySessionToken(token);
 }
+
+export async function requireAdmin(): Promise<
+  | { session: SessionPayload; errorResponse: null }
+  | { session: null; errorResponse: NextResponse }
+> {
+  const session = await getSessionUser();
+  if (!session) {
+    return {
+      session: null,
+      errorResponse: NextResponse.json({ error: "Unauthorized" }, { status: 401 }),
+    };
+  }
+  if (session.role !== "admin") {
+    return {
+      session: null,
+      errorResponse: NextResponse.json({ error: "Forbidden: Admin access required" }, { status: 403 }),
+    };
+  }
+  return { session, errorResponse: null };
+}

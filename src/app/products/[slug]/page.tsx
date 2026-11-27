@@ -1,20 +1,9 @@
 import { notFound } from "next/navigation";
 import { Metadata } from "next";
-import { getProductBySlug, getRelatedProducts, PRODUCTS_DATA } from "@/data/products";
+import { getProductBySlugFromDb, getRelatedProductsFromDb } from "@/lib/products";
 import ProductDetailClient from "./ProductDetailClient";
 
-export async function generateStaticParams() {
-  const params: { slug: string }[] = [];
-  PRODUCTS_DATA.forEach((product) => {
-    params.push({ slug: product.slug });
-    if (product.aliases) {
-      product.aliases.forEach((alias) => {
-        params.push({ slug: alias });
-      });
-    }
-  });
-  return params;
-}
+export const dynamic = "force-dynamic";
 
 export async function generateMetadata({
   params,
@@ -22,7 +11,7 @@ export async function generateMetadata({
   params: Promise<{ slug: string }>;
 }): Promise<Metadata> {
   const { slug } = await params;
-  const product = getProductBySlug(slug);
+  const product = await getProductBySlugFromDb(slug);
 
   if (!product) {
     return {
@@ -55,13 +44,13 @@ export default async function ProductDetailPage({
   params: Promise<{ slug: string }>;
 }) {
   const { slug } = await params;
-  const product = getProductBySlug(slug);
+  const product = await getProductBySlugFromDb(slug);
 
   if (!product) {
     notFound();
   }
 
-  const relatedProducts = getRelatedProducts(product.slug, 4);
+  const relatedProducts = await getRelatedProductsFromDb(product.slug, product.category, 4);
 
   return <ProductDetailClient product={product} relatedProducts={relatedProducts} />;
 }

@@ -2,6 +2,8 @@ export interface ProductColor {
   name: string;
   hex: string;
   imageIndex: number;
+  sku?: string;
+  stock?: number;
 }
 
 export interface SareeProduct {

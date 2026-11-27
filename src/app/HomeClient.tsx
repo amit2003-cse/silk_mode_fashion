@@ -14,9 +14,13 @@ import WhyChooseUs from "@/components/WhyChooseUs";
 import BrandStory from "@/components/BrandStory";
 import Footer from "@/components/Footer";
 import ProductQuickViewModal from "@/components/ProductQuickViewModal";
-import { SareeProduct } from "@/data/products";
+import { PRODUCTS_DATA, SareeProduct } from "@/data/products";
 
-export default function HomeClient() {
+interface HomeClientProps {
+  products?: SareeProduct[];
+}
+
+export default function HomeClient({ products = PRODUCTS_DATA }: HomeClientProps) {
   const [selectedProduct, setSelectedProduct] = useState<SareeProduct | null>(null);
 
   const handleQuickView = (product: SareeProduct) => {
@@ -49,7 +53,7 @@ export default function HomeClient() {
       <ShopByCollection onSelectCategory={handleSelectCategory} />
 
       {/* 5. Trending Collection (Curated Top Picks + View All) */}
-      <TrendingCollection onQuickView={handleQuickView} />
+      <TrendingCollection products={products} onQuickView={handleQuickView} />
 
       {/* 6. "Our customers love us" - 2 Rows of Moving Review Cards */}
       <CustomerReviews />
@@ -61,7 +65,7 @@ export default function HomeClient() {
       <PromotionalBanner />
 
       {/* 9. Best Sellers & Featured Weaves */}
-      <BestSellers onQuickView={handleQuickView} />
+      <BestSellers products={products} onQuickView={handleQuickView} />
 
       {/* 10. Why Choose Us Trust Pillars */}
       <WhyChooseUs />

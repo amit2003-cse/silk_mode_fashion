@@ -3,10 +3,11 @@
 import React, { useState, useEffect } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import { X, MessageCircle, CheckCircle, Sparkles, ArrowRight } from "lucide-react";
+import { X, MessageCircle, CheckCircle, Sparkles, ArrowRight, ShoppingBag, Zap } from "lucide-react";
 import { SareeProduct } from "@/data/products";
 import { getProductWhatsAppUrl } from "@/lib/whatsapp";
 import { trackWhatsAppClick } from "@/lib/gtm";
+import { useCart } from "@/context/CartContext";
 
 interface ProductQuickViewModalProps {
   product: SareeProduct | null;
@@ -14,6 +15,7 @@ interface ProductQuickViewModalProps {
 }
 
 export default function ProductQuickViewModal({ product, onClose }: ProductQuickViewModalProps) {
+  const { addToCart, buyNow } = useCart();
   const [selectedImageIdx, setSelectedImageIdx] = useState(0);
   const [selectedColor, setSelectedColor] = useState<string | undefined>(undefined);
 
@@ -30,6 +32,12 @@ export default function ProductQuickViewModal({ product, onClose }: ProductQuick
   const discountPercent = product.originalPrice
     ? Math.round(((product.originalPrice - product.price) / product.originalPrice) * 100)
     : null;
+
+  const selectedColorObj =
+    (selectedColor ? product.colors?.find((c) => c.name === selectedColor) : undefined) ||
+    product.colors?.[0];
+  const isVariantInStock =
+    product.inStock !== false && (selectedColorObj?.stock ?? 10) > 0;
 
   return (
     <div className="fixed inset-0 z-50 overflow-y-auto flex items-center justify-center p-3 sm:p-6">
@@ -197,8 +205,36 @@ export default function ProductQuickViewModal({ product, onClose }: ProductQuick
             </div>
           </div>
 
-          {/* Actions: View Details & WhatsApp Direct */}
+          {/* Actions: Add to Cart, Buy Now, View Details & WhatsApp Direct */}
           <div className="mt-5 pt-3 border-t border-stone-100 space-y-2">
+            <div className="grid grid-cols-2 gap-2">
+              <button
+                type="button"
+                disabled={!isVariantInStock}
+                onClick={() => {
+                  addToCart(product, selectedColor, 1);
+                  onClose();
+                }}
+                className="flex items-center justify-center space-x-1.5 py-2.5 px-3 rounded-xl bg-[#58111A] hover:bg-[#430D14] disabled:bg-stone-300 text-white font-semibold text-xs transition cursor-pointer disabled:cursor-not-allowed"
+              >
+                <ShoppingBag className="w-4 h-4 shrink-0" />
+                <span>{isVariantInStock ? "Add to Cart" : "Out of Stock"}</span>
+              </button>
+
+              <button
+                type="button"
+                disabled={!isVariantInStock}
+                onClick={() => {
+                  onClose();
+                  buyNow(product, selectedColor, 1);
+                }}
+                className="flex items-center justify-center space-x-1.5 py-2.5 px-3 rounded-xl bg-[#C5A059] hover:bg-[#B28E47] disabled:bg-stone-200 text-white font-semibold text-xs transition cursor-pointer disabled:cursor-not-allowed"
+              >
+                <Zap className="w-4 h-4 shrink-0" />
+                <span>Buy Now</span>
+              </button>
+            </div>
+
             <Link
               href={`/products/${product.slug}`}
               onClick={onClose}

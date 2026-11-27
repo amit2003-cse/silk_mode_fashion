@@ -6,6 +6,7 @@ import { PRODUCTS_DATA, SareeProduct } from "@/data/products";
 import ProductCard from "./ProductCard";
 
 interface TrendingCollectionProps {
+  products?: SareeProduct[];
   onQuickView: (product: SareeProduct) => void;
 }
 
@@ -18,19 +19,22 @@ const CURATED_IDS = [
   "sm-spc-51", // Space Silk Saree with Sparkling Jarkhan Work
 ];
 
-export default function TrendingCollection({ onQuickView }: TrendingCollectionProps) {
+export default function TrendingCollection({
+  products = PRODUCTS_DATA,
+  onQuickView,
+}: TrendingCollectionProps) {
   const [showAll, setShowAll] = useState(false);
 
   // Top 5 curated products
   const topCurated = CURATED_IDS
-    .map((id) => PRODUCTS_DATA.find((p) => p.id === id))
+    .map((id) => products.find((p) => p.id === id))
     .filter((p): p is SareeProduct => Boolean(p));
 
   // Fallback in case any id is missing
-  const initialProducts = topCurated.length >= 4 ? topCurated : PRODUCTS_DATA.slice(0, 5);
+  const initialProducts = topCurated.length >= 4 ? topCurated : products.slice(0, 5);
 
   // Active products list
-  const displayedProducts = showAll ? PRODUCTS_DATA : initialProducts;
+  const displayedProducts = showAll ? products : initialProducts;
 
   return (
     <section id="trending" className="py-12 sm:py-20 bg-stone-50/70 border-b border-stone-200">
@@ -45,7 +49,7 @@ export default function TrendingCollection({ onQuickView }: TrendingCollectionPr
           </h2>
           <p className="mt-2 text-xs sm:text-sm md:text-base text-stone-500 font-normal">
             {showAll
-              ? `Showing all ${PRODUCTS_DATA.length} handcrafted sarees and designer suits.`
+              ? `Showing all ${products.length} handcrafted sarees and designer suits.`
               : "Handpicked signature sarees & suits, adored by our customers."}
           </p>
         </div>
@@ -77,7 +81,7 @@ export default function TrendingCollection({ onQuickView }: TrendingCollectionPr
               onClick={() => setShowAll(true)}
               className="inline-flex items-center justify-center px-9 py-3 rounded-full bg-[#58111A] hover:bg-[#430D14] text-white font-semibold text-xs sm:text-sm tracking-wide transition-all shadow-md hover:shadow-lg active:scale-95 cursor-pointer"
             >
-              View All ({PRODUCTS_DATA.length} Products)
+              View All ({products.length} Products)
             </button>
           ) : (
             <div className="flex flex-col sm:flex-row items-center gap-3">
